@@ -524,7 +524,7 @@ class Querio
         return $this->create($this->bind);
     }
 
-    function getAll(array $fields = ['*']): array
+    function getAll(array $fields = ['*']): array|bool
     {
         return $this->table($this->table)->select($fields)->finish();
     }
