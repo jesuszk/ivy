@@ -7,7 +7,6 @@ use RedirectHeader;
 use src\requests\products\ProductStoreRequest;
 use src\requests\products\ProductUpdateRequest;
 use src\services\ProductService;
-use src\support\View;
 
 class ProductController
 {

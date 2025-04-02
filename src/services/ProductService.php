@@ -9,12 +9,13 @@ use src\exceptions\product\ProductGetAllFailedException;
 use src\exceptions\product\ProductGetByUuidException;
 use src\exceptions\product\ProductUpdateFailedException;
 use src\repositories\ProductRepository;
+use stdClass;
 
 class ProductService
 {
     public function __construct(private ProductRepository $ProductRepository) {}
 
-    public function create(array $data)
+    public function create(array $data): array
     {
         try {
             $data['value_min'] = $data['value_min'] ?? 0;
@@ -25,7 +26,7 @@ class ProductService
         }
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         try {
             return $this->ProductRepository->getAll();
@@ -34,14 +35,16 @@ class ProductService
         }
     }
 
-    public function delete(string $uuid)
+    public function delete(string $uuid): void
     {
-        $deleted = $this->ProductRepository->deleteByUuid($uuid);
-        if (!$deleted)
+        try {
+            $this->ProductRepository->deleteByUuid($uuid);
+        } catch (Exception $e) {
             throw new ProductDeleteFailedException(['uuid' => $uuid]);
+        }
     }
 
-    public function getByUuid(string $uuid)
+    public function getByUuid(string $uuid): stdClass|bool
     {
         try {
             $product = $this->ProductRepository->getByUuid($uuid);
@@ -51,7 +54,7 @@ class ProductService
         }
     }
 
-    public function update(string $uuid, array $data)
+    public function update(string $uuid, array $data): array
     {
         try {
             $data['value_min'] = $data['value_min'] ?? 0;
