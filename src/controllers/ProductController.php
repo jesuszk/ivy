@@ -5,6 +5,7 @@ namespace src\controllers;
 use Exception;
 use RedirectHeader;
 use src\requests\products\ProductStoreRequest;
+use src\requests\products\ProductUpdateRequest;
 use src\services\ProductService;
 use src\support\View;
 
@@ -54,6 +55,18 @@ class ProductController
             return View::render('products.edit', ['product' => $product]);
         } catch (Exception $e) {
             notification()->error($e->getMessage());
+            return redirect()->route('products.index');
+        }
+    }
+
+    public function update(ProductUpdateRequest $request, string $uuid): RedirectHeader
+    {
+        try {
+            $this->ProductService->update($uuid, $request->get());
+            notification()->success('Product updated successfully');
+        } catch (Exception $e) {
+            notification()->error($e->getMessage());
+        } finally {
             return redirect()->route('products.index');
         }
     }

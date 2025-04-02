@@ -7,6 +7,7 @@ use src\exceptions\product\ProductCreateFailedException;
 use src\exceptions\product\ProductDeleteFailedException;
 use src\exceptions\product\ProductGetAllFailedException;
 use src\exceptions\product\ProductGetByUuidException;
+use src\exceptions\product\ProductUpdateFailedException;
 use src\repositories\ProductRepository;
 
 class ProductService
@@ -47,6 +48,17 @@ class ProductService
             return $product;
         } catch (Exception $e) {
             throw new ProductGetByUuidException(['uuid' => $uuid]);
+        }
+    }
+
+    public function update(string $uuid, array $data)
+    {
+        try {
+            $data['value_min'] = $data['value_min'] ?? 0;
+            $product = $this->ProductRepository->updateByUuid($uuid, $data);
+            return $product;
+        } catch (Exception $e) {
+            throw new ProductUpdateFailedException(['uuid' => $uuid]);
         }
     }
 }

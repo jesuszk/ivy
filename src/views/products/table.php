@@ -11,19 +11,25 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($products as $product) : ?>
+        <?php if ($products) : ?>
+            <?php foreach ($products as $product) : ?>
+                <tr>
+                    <td><?= $product->name; ?></td>
+                    <td><?= $product->price; ?></td>
+                    <td><?= $product->quantity; ?></td>
+                    <td><?= $product->control_stock; ?></td>
+                    <td><?= $product->value_min; ?></td>
+                    <td><?= $product->quantity > $product->value_min ? "<span class='text-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>"; ?></td>
+                    <td>
+                        <a href="<?= route('products.edit', ['uuid' => $product->uuid]); ?>" class="btn btn-primary">Edit</a>
+                        <a href="<?= route('products.delete', ['uuid' => $product->uuid]); ?>" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else : ?>
             <tr>
-                <td><?= $product->name; ?></td>
-                <td><?= $product->price; ?></td>
-                <td><?= $product->quantity; ?></td>
-                <td><?= $product->control_stock; ?></td>
-                <td><?= $product->value_min; ?></td>
-                <td><?= $product->quantity > $product->value_min ? "<span class='text-success'>Yes</span>" : "<span class='badge bg-danger'>No</span>"; ?></td>
-                <td>
-                    <a href="<?= route('products.edit', ['uuid' => $product->uuid]); ?>" class="btn btn-primary">Edit</a>
-                    <a href="<?= route('products.delete', ['uuid' => $product->uuid]); ?>" class="btn btn-danger">Delete</a>
-                </td>
+                <td colspan="7" class="text-center">No products found 😟</td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </tbody>
 </table>

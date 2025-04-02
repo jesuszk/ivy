@@ -3,6 +3,9 @@
     'cardTitle' => 'Products Edit',
     'styles' => [
         path()->css('/table-responsive.css'),
+    ],
+    'js' => [
+        path()->js('/products/handleFieldValueMin.js'),
     ]
 ]) ?>
 
@@ -34,7 +37,7 @@
 
         <div id="value-min" class="col-12 col-md-2">
             <label for="value_min" class="form-label fw-bold">Value Min <span class="">*</span></label>
-            <input type="number" class="form-control" name="value_min" placeholder="Value Min" value="<?= $product->value_min; ?>">
+            <input type="number" class="form-control" name="value_min" placeholder="Value Min" value="<?= $product->value_min; ?>" <?= $product->control_stock == 0 ? 'disabled' : ''; ?>>
         </div>
 
         <div class="col-12">
