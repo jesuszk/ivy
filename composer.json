@@ -29,7 +29,8 @@
             "src/helpers/redirect.php",
             "src/helpers/sessions.php",
             "src/helpers/path.php",
-            "src/helpers/view.php"
+            "src/helpers/view.php",
+            "src/helpers/request.php"
         ]
     },
     "license": [
