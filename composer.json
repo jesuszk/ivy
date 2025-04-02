@@ -28,7 +28,8 @@
             "src/helpers/notification.php",
             "src/helpers/redirect.php",
             "src/helpers/sessions.php",
-            "src/helpers/path.php"
+            "src/helpers/path.php",
+            "src/helpers/view.php"
         ]
     },
     "license": [

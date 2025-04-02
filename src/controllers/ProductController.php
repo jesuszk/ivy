@@ -17,10 +17,10 @@ class ProductController
     {
         try {
             $products = $this->ProductService->getAll();
-            return View::render('products.index', ['products' => $products]);
+            return view('products.index', ['products' => $products]);
         } catch (Exception $e) {
             notification()->error($e->getMessage());
-            return View::render('products.index', ['products' => []]);
+            return view('products.index', ['products' => []]);
         }
     }
 
@@ -52,7 +52,7 @@ class ProductController
     {
         try {
             $product = $this->ProductService->getByUuid($uuid);
-            return View::render('products.edit', ['product' => $product]);
+            return view('products.edit', ['product' => $product]);
         } catch (Exception $e) {
             notification()->error($e->getMessage());
             return redirect()->route('products.index');
