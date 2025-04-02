@@ -71,6 +71,7 @@ class Database
         try {
             self::$pdo = new PDO(self::dns(), self::$username, self::$password);
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$pdo->setAttribute(PDO::ATTR_TIMEOUT, 10);
             return self::$pdo;
         } catch (PDOException $e) {
             dd("Erro ao conectar com o banco de dados: " . $e->getMessage());
