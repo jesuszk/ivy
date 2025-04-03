@@ -25,6 +25,7 @@
   background: var(--light);
   justify-content: space-between;
   animation: show_toast 0.3s ease forwards;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes show_toast {
@@ -67,40 +68,42 @@
   }
 }
 
-.zarkify-toast::before {
+/* .zarkify-toast::before {
   position: absolute;
   content: "";
   height: 3px;
   width: 100%;
   bottom: 0px;
   left: 0px;
-  animation: progress 5s linear forwards;
+  animation: progress 300s linear forwards;
 }
 
 @keyframes progress {
   100% {
     width: 0%;
   }
-}
+} */
 
-.zarkify-toast.success::before,
+
+
+.zarkify-toast.success,
 .btn#success {
-  background: var(--success);
+  border-left: 4px solid var(--success);
 }
 
-.zarkify-toast.error::before,
+.zarkify-toast.error,
 .btn#error {
-  background: var(--error);
+  border-left: 4px solid var(--error);
 }
 
-.zarkify-toast.warning::before,
+.zarkify-toast.warning,
 .btn#warning {
-  background: var(--warning);
+  border-left: 4px solid var(--warning);
 }
 
-.zarkify-toast.info::before,
+.zarkify-toast.info,
 .btn#info {
-  background: var(--info);
+  border-left: 4px solid var(--info);
 }
 
 .zarkify-toast .column i {

@@ -62,5 +62,11 @@ function notification()
             show_notification($m, 'warning');
             return $this;
         }
+
+        public function info(string $m)
+        {
+            show_notification($m, 'info');
+            return $this;
+        }
     };
 }
