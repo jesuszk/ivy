@@ -227,7 +227,7 @@ class Querio
                 }
             }
         } catch (PDOException $e) {
-            
+
             if (str_contains($e->getMessage(), "doesn't have a default value")) {
                 throw new ColumnDoesntHaveADefaultValueException(['message from pdo' => $e->errorInfo[2]]);
             } else if (str_contains($e->getMessage(), 'Base table or view not found')) {
@@ -514,7 +514,11 @@ class Querio
         return $this->table($this->table)->update($data)->where("uuid", "=", $uuid)->finish();
     }
 
-    function save()
+    /**
+     * Save the record
+     * @return bool|array<string, mixed>
+     */
+    function save(): bool|array
     {
         if (isset($this->bind['id'])) {
             return $this->updateById($this->bind['id'], $this->bind);
@@ -524,8 +528,13 @@ class Querio
         return $this->create($this->bind);
     }
 
-    function getAll(array $fields = ['*']): array|bool
+    /**
+     * Find all records
+     * @param array<int, string> $fields
+     * @return array<int, object>
+     */
+    function getAll(array $fields = ['*']): array
     {
-        return $this->table($this->table)->select($fields)->finish();
+        return $this->table($this->table)->select($fields)->finish() ?: [];
     }
 }
