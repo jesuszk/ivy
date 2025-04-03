@@ -15,7 +15,7 @@
             <?php foreach ($products as $product) : ?>
                 <tr>
                     <td><?= $product->name; ?></td>
-                    <td><?= $product->price; ?></td>
+                    <td>USD <?= $product->price; ?></td>
                     <td><?= $product->quantity; ?></td>
                     <td><?= $product->control_stock; ?></td>
                     <td><?= $product->value_min; ?></td>
