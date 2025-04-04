@@ -30,6 +30,7 @@
             "src/helpers/sessions.php",
             "src/helpers/path.php",
             "src/helpers/view.php",
+            "src/helpers/redirect_helpers.php",
             "src/helpers/request.php"
         ]
     },

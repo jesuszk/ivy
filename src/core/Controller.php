@@ -4,11 +4,12 @@ namespace src\core;
 
 use DI\Container;
 use Exception;
-use RedirectBack;
-use RedirectRoute;
-use RedirectUri;
 use ReflectionClass;
 use src\support\Json;
+use src\support\Redirect;
+use src\support\RedirectBack;
+use src\support\RedirectRoute;
+use src\support\RedirectUri;
 use src\support\RequestType;
 use src\support\Uri;
 use src\support\View;
@@ -34,18 +35,21 @@ class Controller
         $container = $this->startContainerInjection();
         $controllerObject = $container->get($controller);
 
-        /** @var RedirectUri|RedirectBack|RedirectRoute|View|Json|null */
+        /** @var Redirect|View|Json|null */
         $response = $this->handleRequest($controller, $method, $controllerObject, $container, $params);
 
         if (!$response)
             throw new Exception("Controlller's return content empty: {$controller}", 500);
 
-        if (in_array(true, [$response instanceof RedirectUri, $response instanceof RedirectRoute])) {
-            header("Location: {$_ENV['APP_URL']}{$response->uri}");
-        } else if ($response instanceof RedirectBack) {
-            header('Location: ' . $response->uri);
-        } else if (in_array(true, [$response instanceof View, $response instanceof Json])) {
+
+        if (in_array(true, [$response instanceof View, $response instanceof Json])) {
             echo $response::$isString;
+        } else {
+            if (in_array(true, [$response->returnClass instanceof RedirectUri, $response->returnClass instanceof RedirectRoute])) {
+                header("Location: {$_ENV['APP_URL']}{$response->uri}");
+            } else if ($response->returnClass instanceof RedirectBack) {
+                header('Location: ' . $response->uri);
+            }
         }
     }
 

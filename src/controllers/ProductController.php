@@ -3,70 +3,63 @@
 namespace src\controllers;
 
 use Exception;
-use RedirectHeader;
 use src\requests\products\ProductStoreRequest;
 use src\requests\products\ProductUpdateRequest;
 use src\services\ProductService;
+use src\support\Redirect;
+use src\support\View;
 
 class ProductController
 {
     public function __construct(private ProductService $ProductService) {}
 
-    public function index()
+    public function index(): View
     {
         try {
-            $products = $this->ProductService->getAll();
-            return view('products.index', ['products' => $products]);
+            return view('products.index', ['products' => $this->ProductService->getAll()]);
         } catch (Exception $e) {
             notification()->error($e->getMessage());
             return view('products.index', ['products' => []]);
         }
     }
 
-    public function store(ProductStoreRequest $request): RedirectHeader
+    public function store(ProductStoreRequest $request)
     {
         try {
             $this->ProductService->create($request->get());
-            notification()->success('Product created successfully');
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->withSuccess('Product created successfully');
         } catch (Exception $e) {
-            notification()->error($e->getMessage());
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->withError($e->getMessage());
         }
     }
 
-    public function delete(string $uuid): RedirectHeader
+    public function delete(string $uuid): Redirect
     {
         try {
             $this->ProductService->delete($uuid);
-            notification()->success('Product deleted successfully');
+            return redirect()->route('products.index')->withSuccess('Product deleted successfully');
         } catch (Exception $e) {
-            notification()->error($e->getMessage());
-        } finally {
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->withError($e->getMessage());
         }
     }
 
-    public function edit(string $uuid)
+    public function edit(string $uuid): View|Redirect
     {
         try {
             $product = $this->ProductService->getByUuid($uuid);
             return view('products.edit', ['product' => $product]);
         } catch (Exception $e) {
-            notification()->error($e->getMessage());
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->withError($e->getMessage());
         }
     }
 
-    public function update(ProductUpdateRequest $request, string $uuid): RedirectHeader
+    public function update(ProductUpdateRequest $request, string $uuid): Redirect
     {
         try {
             $this->ProductService->update($uuid, $request->get());
-            notification()->success('Product updated successfully');
+            return redirect()->route('products.index')->withSuccess(['Product updated successfully']);
         } catch (Exception $e) {
-            notification()->error($e->getMessage());
-        } finally {
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->withError($e->getMessage());
         }
     }
 }
