@@ -7,6 +7,7 @@ use src\commands\MakeControllerCommand;
 use src\commands\MakeServiceCommand;
 use src\commands\MakeRepositoryCommand;
 use src\commands\MakeRequestCommand;
+use src\commands\MakeExceptionCommand;
 use Symfony\Component\Console\Application;
 
 $app = new Application();
@@ -15,4 +16,5 @@ $app->add(new MakeServiceCommand());
 $app->add(new MakeRepositoryCommand());
 $app->add(new DbMigrate());
 $app->add(new MakeRequestCommand());
+$app->add(new MakeExceptionCommand());
 $app->run();
