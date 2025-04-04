@@ -6,7 +6,6 @@ use src\database\Database;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class DbMigrate extends Command
@@ -16,17 +15,15 @@ class DbMigrate extends Command
         $this
             ->setName('db:migrate')
             ->setDescription('Executa as migrações do banco de dados.')
-            ->addArgument('file', InputArgument::REQUIRED, 'Nome do arquivo de migração')
-            ->addOption('path', null, InputOption::VALUE_OPTIONAL, 'Se o caminho do arquivo de migração é diferente do padrão');
+            ->addArgument('file', InputArgument::REQUIRED, 'Nome do arquivo de migração');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $file = $input->getArgument('file');
-        $path = $input->getOption('path');
         $directory = __DIR__ . "/../database/migrations";
 
-        $filename = $path ? "$directory/{$path}/{$file}.sql" : "$directory/{$file}.sql";
+        $filename = "$directory/{$file}.sql";
         
         if (!file_exists($filename)) {
             $output->writeln("<error>Arquivo de migração não encontrado</error>");
