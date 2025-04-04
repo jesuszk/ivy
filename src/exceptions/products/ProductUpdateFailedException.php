@@ -1,11 +1,11 @@
 <?php
 
-namespace src\exceptions\product;
+namespace src\exceptions\products;
 
 use Exception;
 use src\traits\LogException;
 
-class ProductCreateFailedException extends Exception
+class ProductUpdateFailedException extends Exception
 {
     private string $entity = 'products';
 
@@ -13,7 +13,7 @@ class ProductCreateFailedException extends Exception
 
     function __construct(array $content = [])
     {
-        $message = 'Não foi possível criar o produto';
+        $message = 'Não foi possível atualizar o produto';
         $code = 500;
         $this->log($message, $code, json_encode($content));
         return parent::__construct($message, $code);

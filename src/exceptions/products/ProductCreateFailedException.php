@@ -1,11 +1,11 @@
 <?php
 
-namespace src\exceptions\product;
+namespace src\exceptions\products;
 
 use Exception;
 use src\traits\LogException;
 
-class ProductDeleteFailedException extends Exception
+class ProductCreateFailedException extends Exception
 {
     private string $entity = 'products';
 
@@ -13,7 +13,7 @@ class ProductDeleteFailedException extends Exception
 
     function __construct(array $content = [])
     {
-        $message = 'Não foi possível deletar o produto';
+        $message = 'Não foi possível criar o produto';
         $code = 500;
         $this->log($message, $code, json_encode($content));
         return parent::__construct($message, $code);
