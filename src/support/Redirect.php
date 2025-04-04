@@ -80,22 +80,17 @@ class Redirect
         }
         return $this;
     }
-}
-
-
-
-class RedirectHeader
-{
-    public ?string $uri;
 
     function make()
     {
-        header('Location: ' . $_ENV['APP_URL'] . $this->uri);
+        header('Location: ' . $this->uri);
     }
 }
 
 
-class RedirectUri extends RedirectHeader
+
+
+class RedirectUri
 {
     public ?string $uri;
     function __construct(string $uri)
@@ -107,7 +102,7 @@ class RedirectUri extends RedirectHeader
 
 
 
-class RedirectBack extends RedirectHeader
+class RedirectBack
 {
     public ?string $uri;
     function __construct()
@@ -120,7 +115,7 @@ class RedirectBack extends RedirectHeader
 }
 
 
-class RedirectRoute extends RedirectHeader
+class RedirectRoute
 {
     public ?string $uri;
     function __construct(string $name, array $indexes)

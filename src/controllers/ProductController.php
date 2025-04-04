@@ -23,7 +23,7 @@ class ProductController
         }
     }
 
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request): Redirect
     {
         try {
             $this->ProductService->create($request->get());
