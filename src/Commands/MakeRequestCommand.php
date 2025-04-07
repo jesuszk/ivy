@@ -22,9 +22,10 @@ class MakeRequestCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
+        $plural = substr($name, -1) === 'y' ? substr($name, 0, -1) . 'ies' : $name . 's';
         $rules = $input->getOption('rules');
         $directory = __DIR__ . "/../requests";
-        $filename = "$directory/{$name}.php";
+        $filename = "$directory/{$plural}/{$name}.php";
 
         $fileDirectory = dirname($filename);
         if (!is_dir($fileDirectory)) {
@@ -54,7 +55,14 @@ class MakeRequestCommand extends Command
         $onlyName = substr($name, strrpos($name, '/') + 1) ?: $name;
         $namespace = 'src\\requests';
         if (strpos($name, '/') !== false) {
-            $namespace .= '\\' . str_replace('/', '\\', dirname($name));
+            $dirName = dirname($name);
+            $dirParts = explode('/', $dirName);
+            foreach ($dirParts as &$part) {
+                $part = substr($part, -1) === 'y' ? substr($part, 0, -1) . 'ies' : $part . 's';
+            }
+            $namespace .= '\\' . implode('\\', $dirParts);
+        } else {
+            $namespace .= '\\' . $plural;
         }
         
         $template = <<<PHP

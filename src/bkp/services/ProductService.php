@@ -3,11 +3,11 @@
 namespace src\services;
 
 use Exception;
-use src\exceptions\product\ProductCreateFailedException;
-use src\exceptions\product\ProductDeleteFailedException;
-use src\exceptions\product\ProductGetAllFailedException;
-use src\exceptions\product\ProductGetByUuidException;
-use src\exceptions\product\ProductUpdateFailedException;
+use src\exceptions\products\ProductCreateFailedException;
+use src\exceptions\products\ProductDeleteFailedException;
+use src\exceptions\products\ProductGetAllFailedException;
+use src\exceptions\products\ProductGetByUuidException;
+use src\exceptions\products\ProductUpdateFailedException;
 use src\repositories\ProductRepository;
 use stdClass;
 
