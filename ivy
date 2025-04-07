@@ -10,6 +10,8 @@ use src\commands\MakeRequestCommand;
 use src\commands\MakeExceptionCommand;
 use src\commands\ViewTableCommand;
 use src\commands\ViewIndexCommand;
+use src\commands\ViewEditCommand;
+use src\commands\MakeCrudCommand;
 use Symfony\Component\Console\Application;
 
 $app = new Application();
@@ -21,4 +23,6 @@ $app->add(new MakeRequestCommand());
 $app->add(new MakeExceptionCommand());
 $app->add(new ViewTableCommand());
 $app->add(new ViewIndexCommand());
+$app->add(new ViewEditCommand());
+$app->add(new MakeCrudCommand());
 $app->run();

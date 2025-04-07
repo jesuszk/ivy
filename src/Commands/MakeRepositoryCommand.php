@@ -1,12 +1,13 @@
 <?php
 
-namespace src\commands;
+namespace src\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeRepositoryCommand extends Command
 {
@@ -14,59 +15,45 @@ class MakeRepositoryCommand extends Command
     {
         $this
             ->setName('make:repository')
-            ->setDescription('Cria um novo repository.')
-            ->addArgument('name', InputArgument::REQUIRED, 'Nome do repository')
-            ->addOption('table', null, InputOption::VALUE_REQUIRED, 'Nome da tabela para o repositório')
-            ->addOption('full', null, InputOption::VALUE_NONE, 'Verifica se é full');
+            ->setDescription('Create a new repository')
+            ->addArgument('name', InputArgument::REQUIRED, 'Name of the repository (singular form)')
+            ->addOption('crud', null, InputOption::VALUE_NONE, 'Create CRUD methods');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $full = $input->getOption('full');
-        $name = $input->getArgument('name');
-        $newName = str_replace('Repository', '', $name);
-        $directory = __DIR__ . "/../repositories";
-        $filename = "$directory/{$name}.php";
-        $optionTable = $input->getOption('table');
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
+        $io = new SymfonyStyle($input, $output);
+        $name = strtolower($input->getArgument('name'));
+        $plural = substr($name, -1) === 'y' ? substr($name, 0, -1) . 'ies' : $name . 's';
+        $isCrud = $input->getOption('crud');
 
-        if (file_exists($filename)) {
-            $output->writeln("<error>Repository {$name} already exists</error>");
+        $repositoryName = ucfirst($name) . 'Repository';
+        $filePath = __DIR__ . "/../repositories/{$repositoryName}.php";
+
+        if (file_exists($filePath)) {
+            $io->error("Repository {$repositoryName} already exists!");
             return Command::FAILURE;
         }
 
-        if (!$full) {
-            $template = <<<PHP
-    <?php
+        $content = "<?php\n\n";
+        $content .= "namespace src\\repositories;\n\n";
+        $content .= "use src\\repositories\Querio;\n\n";
+        $content .= "class {$repositoryName} extends Querio\n";
+        $content .= "{\n";
+        $content .= "    protected string \$table = '{$plural}';\n\n";
 
-    namespace src\\repositories;
-
-
-    class {$newName}Repository extends Querio
-    {
-        protected string \$table = '$optionTable';
-    }
-
-    PHP;
-        } else {
-            $template = <<<PHP
-            <?php
-        
-            namespace src\\repositories;
-        
-        
-            class $name extends Querio
-            {
-                protected string \$table = '$optionTable';
-            }
-        
-            PHP;
+        if ($isCrud) {
+          
         }
 
-        file_put_contents($filename, $template);
-        $output->writeln("<info>Repository '$name' created successfully!</info>");
+        $content .= "}\n";
+
+        if (!is_dir(dirname($filePath))) {
+            mkdir(dirname($filePath), 0777, true);
+        }
+
+        file_put_contents($filePath, $content);
+        $io->success("Repository {$repositoryName} created successfully!");
 
         return Command::SUCCESS;
     }

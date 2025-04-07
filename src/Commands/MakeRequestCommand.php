@@ -26,9 +26,12 @@ class MakeRequestCommand extends Command
         $directory = __DIR__ . "/../requests";
         $filename = "$directory/{$name}.php";
 
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+        $fileDirectory = dirname($filename);
+        if (!is_dir($fileDirectory)) {
+            if (!mkdir($fileDirectory, 0777, true)) {
+                $output->writeln("<error>Failed to create directory: {$fileDirectory}</error>");
+                return Command::FAILURE;
+            }
         }
 
         if (file_exists($filename)) {
@@ -49,12 +52,17 @@ class MakeRequestCommand extends Command
 
         $rulesString = $this->generateRulesString($rulesArray);
         $onlyName = substr($name, strrpos($name, '/') + 1) ?: $name;
+        $namespace = 'src\\requests';
+        if (strpos($name, '/') !== false) {
+            $namespace .= '\\' . str_replace('/', '\\', dirname($name));
+        }
+        
         $template = <<<PHP
 <?php
 
-namespace src\\requests;
+namespace {$namespace};
 
-use src\\requests\Request;
+use src\\requests\\Request;
 
 class {$onlyName} extends Request {
     protected array \$rules = [
