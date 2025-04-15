@@ -76,10 +76,24 @@ class MakeCrudCommand extends Command
 
         // Create table view
         $io->text("Creating table view...");
+        
+        // Read fields from JSON file
+        $fieldsJson = file_get_contents($fieldsFile);
+        $fields = json_decode($fieldsJson, true);
+        
+        // Extract column names from fields
+        $columns = array_map(function($field) {
+            return $field['name'];
+        }, $fields);
+        
+        // Add actions column
+        $columns[] = 'actions';
+        
         $tableCommand = new ViewTableCommand();
         $tableCommand->setApplication($this->getApplication());
         $tableInput = new \Symfony\Component\Console\Input\ArrayInput([
-            'name' => $name
+            'name' => $name,
+            'columns' => implode(',', $columns)
         ]);
         $tableCommand->run($tableInput, $output);
 
