@@ -110,14 +110,14 @@ class ViewIndexCommand extends Command
             $content .= "            <label for=\"{$fieldName}\" class=\"form-label fw-bold\">" . ucfirst(str_replace('_', ' ', $fieldName)) . "{$requiredSpan}</label>\n";
 
             if ($fieldType === 'select') {
-                $content .= "            <select name=\"{$fieldName}\" id=\"{$fieldName}\" class=\"form-select\">\n";
+                $content .= "            <select name=\"{$fieldName}\" id=\"{$fieldName}\" class=\"form-select form-select-sm\">\n";
                 foreach ($field['options'] as $option) {
                     $content .= "                <option value=\"{$option['value']}\">{$option['label']}</option>\n";
                 }
                 $content .= "            </select>\n";
             } else {
                 $inputType = $this->getInputType($fieldType);
-                $content .= "            <input type=\"{$inputType}\" class=\"form-control\" name=\"{$fieldName}\" id=\"{$fieldName}\"";
+                $content .= "            <input type=\"{$inputType}\" class=\"form-control form-control-sm\" name=\"{$fieldName}\" id=\"{$fieldName}\"";
                 if (isset($field['step'])) {
                     $content .= " step=\"{$field['step']}\"";
                 }
