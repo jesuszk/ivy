@@ -26,6 +26,7 @@ class MakeCrudCommand extends Command
         $name = strtolower($input->getArgument('name'));
         $plural = substr($name, -1) === 'y' ? substr($name, 0, -1) . 'ies' : $name . 's';
         $isFull = $input->getOption('full');
+        $nameUcFirst = ucfirst($name);
 
         $io->title("Creating CRUD for {$plural}");
 
@@ -62,7 +63,7 @@ class MakeCrudCommand extends Command
 
         // Create views
         $io->section("Creating views...");
-        
+
         // Create index view
         $io->text("Creating index view...");
         $indexCommand = new ViewIndexCommand();
@@ -123,6 +124,55 @@ class MakeCrudCommand extends Command
             $repositoryCommand->run($repositoryInput, $output);
         }
 
+        // Create exceptions if --full flag is used
+        if ($isFull) {
+            $io->section("Creating exceptions...");
+            $exceptions = [
+                "{$nameUcFirst}CreateFailedException" => "Failed to create {$name}",
+                "{$nameUcFirst}DeleteFailedException" => "Failed to delete {$name}",
+                "{$nameUcFirst}GetAllFailedException" => "Failed to get all {$plural}",
+                "{$nameUcFirst}GetByUuidException" => "Failed to get {$name} by UUID",
+                "{$nameUcFirst}UpdateFailedException" => "Failed to update {$name}"
+            ];
+
+            $exceptionsDir = __DIR__ . "/../exceptions/{$plural}";
+            if (!is_dir($exceptionsDir)) {
+                mkdir($exceptionsDir, 0777, true);
+                $io->text("Created directory: {$exceptionsDir}");
+            }
+
+            foreach ($exceptions as $exceptionName => $message) {
+                $exceptionFile = "{$exceptionsDir}/{$exceptionName}.php";
+                if (!file_exists($exceptionFile)) {
+                    $exceptionContent = <<<PHP
+                    <?php
+
+                    namespace src\\exceptions\\{$plural};
+
+                    use Exception;
+                    use src\\traits\\LogException;
+
+                    class {$exceptionName} extends Exception
+                    {
+                        private string \$entity = '{$plural}';
+
+                        use LogException;
+
+                        function __construct(array \$content = [])
+                        {
+                            \$message = '{$message}';
+                            \$code = 500;
+                            \$this->log(\$message, \$code, json_encode(\$content));
+                            return parent::__construct(\$message, \$code);
+                        }
+                    }
+                    PHP;
+                    file_put_contents($exceptionFile, $exceptionContent);
+                    $io->text("Created exception: {$exceptionName}");
+                }
+            }
+        }
+
         $io->success("All CRUD components created successfully!");
         $io->text("Files created:");
         $files = [
@@ -143,4 +193,4 @@ class MakeCrudCommand extends Command
 
         return Command::SUCCESS;
     }
-} 
+}
