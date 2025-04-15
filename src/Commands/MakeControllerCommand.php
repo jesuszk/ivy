@@ -112,12 +112,6 @@ class MakeControllerCommand extends Command
             $content .= "        }\n";
             $content .= "    }\n\n";
 
-            // Show method
-            $content .= "    public function show(string \$uuid)\n";
-            $content .= "    {\n";
-            $content .= "        \${$name} = \$this->{$name}Service->getByUuid(\$uuid);\n";
-            $content .= "        return View::render('{$plural}.show', ['{$name}' => \${$name}]);\n";
-            $content .= "    }\n\n";
 
             // Edit method
             $content .= "    public function edit(string \$uuid): View|Redirect\n";
@@ -142,7 +136,7 @@ class MakeControllerCommand extends Command
             $content .= "    }\n";
 
             // Delete method
-            $content .= "    public function destroy(string \$uuid): Redirect\n";
+            $content .= "    public function delete(string \$uuid): Redirect\n";
             $content .= "    {\n";
             $content .= "        try {\n";
             $content .= "            \$this->{$name}Service->delete(\$uuid);\n";
