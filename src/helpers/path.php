@@ -2,20 +2,26 @@
 
 function path()
 {
-    return new class {
-        function images($path = '')
+    return new class() {
+        function images(string $path)
         {
-            return $_ENV["APP_URL"] . "/public/images/{$path}";
+            if ($path[0] === '/')
+                $path = mb_substr($path, 1);
+            return $_ENV['APP_URL'] . "/public/images/{$path}";
         }
 
-        function js($path = '')
+        function js(string $path)
         {
-            return $_ENV["APP_URL"]  . "/public/js{$path}";
+            if ($path[0] !== '/')
+                $path = "/{$path}";
+            return $_ENV['APP_URL']  . "/public/js{$path}";
         }
 
-        function css($path = '')
+        function css(string $path)
         {
-            return $_ENV["APP_URL"] . "/public/css{$path}";
+            if ($path[0] !== '/')
+                $path = "/{$path}";
+            return $_ENV['APP_URL'] . "/public/css{$path}";
         }
     };
 }
