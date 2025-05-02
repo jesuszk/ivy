@@ -41,7 +41,7 @@ class ProductService
     public function getAll(): array
     {
         try {
-            return $this->productRepository->getAll();
+            return $this->productRepository->getAllWithCategories();
         } catch (Exception $e) {
             throw new ProductGetAllFailedException();
         }

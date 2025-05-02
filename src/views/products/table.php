@@ -3,6 +3,7 @@
     <tr>
         <th>Name</th>
         <th>Price</th>
+        <th>Category</th>
         <th>Actions</th>
     </tr>
 </thead>
@@ -12,6 +13,7 @@
             <tr>
                 <td><?= $product->name; ?></td>
                 <td><?= $product->price; ?></td>
+                <td><?= $product->category->name; ?></td>
                 <td>
                     <a href="<?= route('products.edit', ['uuid' => $product->uuid]); ?>" class="btn btn-primary">Edit</a>
                     <a href="<?= route('products.delete', ['uuid' => $product->uuid]); ?>" class="btn btn-danger">Delete</a>

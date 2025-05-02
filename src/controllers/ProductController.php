@@ -9,18 +9,21 @@ use src\Support\Redirect;
 
 use src\requests\products\ProductStoreRequest;
 use src\requests\products\ProductUpdateRequest;
+use src\Services\CategoryService;
 
 class ProductController
 {
-    public function __construct(private ProductService $productService)
-    {
-    }
+    public function __construct(
+        private ProductService $productService,
+        private CategoryService $categoryService
+    ) {}
 
     public function index(): View
     {
         try {
             $products = $this->productService->getAll();
-            return view('products.index', ['products' => $products]);
+            $categories = $this->categoryService->getOnlyActives();
+            return view('products.index', ['products' => $products, 'categories' => $categories]);
         } catch (\Exception $e) {
             notification()->error($e->getMessage());
             return view('products.index', ['products' => []]);
@@ -46,7 +49,8 @@ class ProductController
     {
         try {
             $product = $this->productService->getByUuid($uuid);
-            return view('products.edit', ['product' => $product]);
+            $categories = $this->categoryService->getOnlyActives();
+            return view('products.edit', ['product' => $product, 'categories' => $categories]);
         } catch (\Exception $e) {
             return redirect()->route('products.index')->withError($e->getMessage());
         }

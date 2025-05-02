@@ -15,6 +15,15 @@
             <label for="price" class="form-label fw-bold">Price <span class="">*</span></label>
             <input type="number" class="form-control" name="price" id="price" value="<?= $product->price; ?>" placeholder="Price" step="0.01">
         </div>
+        <div class="col-12 col-md-3">
+            <label for="category_id" class="form-label fw-bold">Category <span class="">*</span></label>
+            <select name="category_id" id="category_id" class="form-select form-select-sm" required>
+                <option value="">Select Category</option>
+                <?php foreach ($categories as $category) { ?>
+                    <option value="<?= $category->id; ?>" <?= isSelect($product->category_id, $category->id) ?>><?= $category->name; ?></option>
+                <?php } ?>
+            </select>
+        </div>
         <div class="col-12">
             <button class="btn btn-company float-end">Update <i class="ph ph-paper-plane-tilt"></i></button>
         </div>

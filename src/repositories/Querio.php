@@ -535,6 +535,7 @@ class Querio
      */
     function getAll(array $fields = ['*']): array
     {
-        return $this->table($this->table)->select($fields)->finish() ?: [];
+        $results =  $this->table($this->table)->select($fields)->finish() ?: [];
+        return $results;
     }
 }

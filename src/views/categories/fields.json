@@ -1,0 +1,17 @@
+[
+    {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "col_size": "col-12 col-md-4",
+        "placeholder": "Name"
+    },
+    {
+        "name": "active",
+        "type": "select",
+        "options": [{"value": "Y","label": "Active"},{"value": "N","label": "Inactive"}],
+        "required": true,
+        "col_size": "col-12 col-md-2",
+        "placeholder": "Is Active?"
+    }
+]
