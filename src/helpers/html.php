@@ -45,3 +45,19 @@ function pagination(int $length)
 
   return $pagination;
 }
+
+
+function el(string $key): string
+{
+  $lang = $_ENV['APP_LANGUAGE'] ?? 'pt-br';
+  $langFile = __DIR__ . "/../../assets/lang/{$lang}.json";
+
+  if (!file_exists($langFile)) {
+    return $key;
+  }
+
+  $content = file_get_contents($langFile);
+  $translations = json_decode($content, true);
+
+  return $translations[$key] ?? $key;
+}
