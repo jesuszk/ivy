@@ -27,7 +27,7 @@
     <div class="login-area login-bg">
         <div class="container">
             <div class="login-box ptb--100">
-                <form>
+                <form method="POST" action="<?= route('auth.registerStore'); ?>">
                     <div class="login-form-head">
                         <img src="<?= path()->images('missao.png') ?>" alt="Missão Sementes" class="img-fluid" style="filter: brightness(0) invert(1);">
                         <p class="m-0"><?= el("login_description") ?></p>
@@ -41,16 +41,16 @@
                             <label for="passwd"><?= el('login_passwd_label'); ?></label>
                             <input type="password" id="passwd" name="passwd" class="form-control form-control-sm" placeholder="🔐 ************">
                         </div>
-                        <div class="row mb-4 rmber-area">
-                            <div class="col-6 text-right">
-                                <a href="#"><?= el("login_forgot_passwd") ?></a>
-                            </div>
+
+                        <div class="mb-3">
+                            <label for="passwd_confirmation"><?= el("register_passwd_confirmation_label"); ?></label>
+                            <input type="password" id="passwd_confirmation" name="passwd_confirmation" class="form-control form-control-sm" placeholder="🔐 ************">
                         </div>
                         <div class="submit-btn-area">
-                            <button id="form_submit" type="submit"><?= el("login_button_submit") ?> <i class="ph ph-sign-in"></i></button>
+                            <button id="form_submit" type="submit"><?= el("register_button_submit") ?> <i class="ph ph-paper-plane-tilt"></i></button>
                         </div>
                         <div class="form-footer text-center mt-5">
-                            <p class="text-muted"><?= el("login_dont_have_account") ?> <a href="<?= route('auth.register') ?>"><?= el("login_create_account") ?></a></p>
+                            <p class="text-muted"><?= el("register_you_have_account") ?> <a href="<?= route('auth.login') ?>" class="text-decoration-none"><?= el("register_back_login") ?></a></p>
                         </div>
                     </div>
                 </form>

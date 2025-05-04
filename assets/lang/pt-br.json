@@ -2,8 +2,15 @@
   "login_description": "Missão Sementes 🙏🏼",
   "login_email_label": "E-mail ou usuário",
   "login_email_placeholder": "exemplo@dominio.com",
+  "login_passwd_label": "Senha",
   "login_forgot_passwd": "Esqueceu sua senha?",
   "login_button_submit": "Entrar",
   "login_dont_have_account": "Não tem uma conta?",
-  "login_create_account": "Criar conta"
+  "login_create_account": "Criar conta",
+
+
+  "register_passwd_confirmation_label": "Confirmação da senha",
+  "register_you_have_account": "Já possui uma conta?",
+  "register_back_login": "Fazer Login 🚀",
+  "register_button_submit": "Criar conta"
 }
