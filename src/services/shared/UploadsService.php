@@ -54,8 +54,8 @@ class UploadsService
         move_uploaded_file($file_path, $new_file_path);
 
         $configs = json_decode($_POST['configs'], true);
-        $configs["usuario_chave"] = $_SESSION["usuarioLogin"];
-        $configs["usuario_nome"] = $_SESSION["usuarioNome"];
+        $configs["usuario_chave"] = $_SESSION["usuarioLogin"] ?? user()->key;
+        $configs["usuario_nome"] = $_SESSION["usuarioNome"] ?? user()->name;
         $configs["arquivo_nome"] = $new_file_name;
         $configs["arquivo_nome_original"] = $file_name;
         $configs["arquivo_tipo"] = $file_type;

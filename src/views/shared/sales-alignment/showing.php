@@ -161,7 +161,7 @@
                                 <input type="text" class="form-control form-control-sm attach" name="block_item[<?= $idx ?>][anexo]" id="anexo_<?= $idx ?>" readonly value="<?= $item->anexo ?>">
                                 <button class="btn btn-company d-flex align-items-center justify-content-center is-trigger" type="button" id="anexo_<?= $idx ?>_trigger"><i class="ph ph-monitor-arrow-up fs-5"></i></button>
                             </div>
-                            <small class="text-muted" id="anexo_<?= $idx ?>_titulo"><?= $processData["uploads"]["anexo_{$idx}"]->arquivo_nome_original ?></small>
+                            <small class="text-muted" id="anexo_<?= $idx ?>_titulo"><?= $processData["uploads"]["anexo_{$idx}"]->arquivo_nome_original ?? '' ?></small>
                         </div>
                     </div>
                     <?php $idx += 1; ?>

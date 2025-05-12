@@ -87,14 +87,14 @@ abstract class Request
         return [
             "processo_uuid" => $this->get("processo_uuid"),
             "etapa" => $this->get("etapa_atual"),
-            "usuario_chave" => $_SESSION["usuarioLogin"],
-            "usuario_nome" => $_SESSION["usuarioNome"],
+            "usuario_chave" => $_SESSION["usuarioLogin"] ?? user()->key,
+            "usuario_nome" => $_SESSION["usuarioNome"] ?? user()->name,
             "descricao" => $this->get("observacoes")
         ];
     }
 
     function log()
     {
-        make_log($this->get("log"), $this->get("processo_uuid"), $this->get("etapa_atual"), $_SESSION["usuarioLogin"],  $_SESSION["usuarioNome"]);
+        make_log($this->get("log"), $this->get("processo_uuid"), $this->get("etapa_atual"), $_SESSION["usuarioLogin"] ?? user()->key,  $_SESSION["usuarioNome"] ?? user()->name);
     }
 }

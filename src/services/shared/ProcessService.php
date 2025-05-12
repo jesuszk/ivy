@@ -17,8 +17,8 @@ class ProcessService
     function open(): array|bool
     {
         return $this->processRepository->create([
-            "iniciador_chave" => $_SESSION["usuarioLogin"],
-            "iniciador_nome" => $_SESSION["usuarioNome"],
+            "iniciador_chave" => $_SESSION["usuarioLogin"] ?? user()->key,
+            "iniciador_nome" => $_SESSION["usuarioNome"] ?? user()->name,
             "etapa_atual" => $_ENV["SALES_ALIGNMENT"],
             "estado" => $_ENV["STATE_OPENED"]
         ]);
@@ -27,9 +27,8 @@ class ProcessService
     /**
      * Caso aconteça algum erro na abertura do processo, realiza o rollback excluindo os dados de todas as tabelas secundárias.
      * @param string $processUuid
-     * @return null
      */
-    function rollback(string $processUuid): null
+    function rollback(string $processUuid)
     {
         return $this->processRepository->rollback($processUuid);
     }

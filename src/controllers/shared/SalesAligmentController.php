@@ -38,7 +38,7 @@ class SalesAligmentController
     {
         try {
             $processData = $this->processService->findProcessDataAllSteps($processUuid);
-            make_log("Acessou o processo na etapa {$_ENV["SALES_ALIGNMENT"]}", $processUuid);
+            make_log("Acessou o processo", $processUuid, $_ENV["SALES_ALIGNMENT"]);
             return view("shared.sales-alignment.showing", ["processData" => $processData]);
         } catch (Exception $e) {
             make_log("Houve um erro ao tentar abrir a SFP. Exception message: {$e->getMessage()}", $processUuid);
@@ -65,6 +65,7 @@ class SalesAligmentController
             $toEtapaVendasAlinhamentoItens = $request->toEtapaVendasAlinhamentoItens();
 
 
+            
             $this->processService->persist($toProcesso);
             $this->processService->persistObservations($toObservacao);
             $this->salesAlignmentService->persist($toEtapaVendasAlinhamento);

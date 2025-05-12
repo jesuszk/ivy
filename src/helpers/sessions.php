@@ -1,5 +1,7 @@
 <?php
 
+use Ramsey\Uuid\Rfc4122\UuidV4;
+use Ramsey\Uuid\Uuid;
 use src\database\Database;
 use src\support\Sessions;
 
@@ -151,12 +153,13 @@ function applyOldInput(string $key)
 function make_log(string $conteudo, string $processo_uuid, ?string $etapa = null, ?string $usuario_chave = null, ?string $usuario_nome = null)
 {
     $db = ((Database::setConfig())::get());
-    $insert = "INSERT INTO sfp_ammx.logs (etapa, usuario_chave, usuario_nome, conteudo, processo_uuid) VALUES (:etapa, :usuario_chave, :usuario_nome, :conteudo, :processo_uuid);";
+    $insert = "INSERT INTO sfp_ammx.logs (etapa, usuario_chave, usuario_nome, conteudo, processo_uuid, uuid) VALUES (:etapa, :usuario_chave, :usuario_nome, :conteudo, :processo_uuid, :uuid);";
     $stmt = $db->prepare($insert);
     return $stmt->execute([
+        ":uuid" => UuidV4::uuid4()->toString(),
         ":etapa" => $etapa,
-        ":usuario_chave" => $usuario_chave ?? $_SESSION["usuarioLogin"],
-        ":usuario_nome" => $usuario_nome ?? $_SESSION['usuarioNome'],
+        ":usuario_chave" => $usuario_chave ?? user()->key,
+        ":usuario_nome" => $usuario_nome ?? user()->name,
         ":conteudo" => $conteudo,
         ":processo_uuid" => $processo_uuid
     ]);
@@ -166,4 +169,13 @@ function make_log(string $conteudo, string $processo_uuid, ?string $etapa = null
 function notEmpty(string $v)
 {
     return !empty($v);
+}
+
+
+function user()
+{
+    return (object) [
+        "name" => $_SESSION["usuarioNome"] ?? 'test',
+        "key" => $_SESSION["usuarioLogin"] ?? 'test'
+    ];
 }

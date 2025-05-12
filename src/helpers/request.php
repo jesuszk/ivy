@@ -11,6 +11,19 @@ function request()
             return $_GET;
         }
 
+        function emptyToNull(array $array)
+        {
+            $return = [];
+            foreach ($array as $key => $r) {
+                if (empty($r)) {
+                    $return[$key] = null;
+                } else {
+                    $return[$key] = $r;
+                }
+            }
+            return $return;
+        }
+
         function type(): string
         {
             return $_SERVER['REQUEST_METHOD'];
