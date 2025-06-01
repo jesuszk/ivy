@@ -1,3 +1,4 @@
+<?php $t = time(); ?>
 <!doctype html>
 <html lang="pt-BR">
 
@@ -6,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $webTitle ?? 'Web Title Default' ?></title>
-    <link rel="stylesheet" href="<?= path()->css("/global.css") ?>">
+    <link rel="stylesheet" href="<?= path()->css("/global.css?t={$t}") ?>">
     <?= $this->insert('templates/styles', ['styles' => $styles ?? []]) ?>
 </head>
 
@@ -18,7 +19,8 @@
         <div class="card mb-4">
             <div class="card-header">
                 <div class="name-and-logo">
-                    <span class="d-flex align-items-center"><?= $cardTitle ?? null ?></span>
+                    <span class="d-flex align-items-center">
+                        <?php if (isset($backTo)) { ?><a href="<?= $backTo ?>" class="d-flex text-decoration-none text-dark me-3"><i class="ph ph-arrow-left"></i></a><?php } ?><?= $cardTitle ?? null ?></span>
                     <img src="<?= path()->images('/' . 'vellum' . '.png'); ?>" alt="Logo Empresa">
                 </div>
             </div>
@@ -27,9 +29,9 @@
             </div>
         </div>
     </div>
-    <script src="<?= path()->js("/bs5.js") ?>"></script>
-    <script src="<?= path()->js("/init.js"); ?>"></script>
-    <script src="<?= path()->js("/notification.js"); ?>"></script>
+    <script src="<?= path()->js("/bs5.js?t={$t}") ?>"></script>
+    <script src="<?= path()->js("/init.js?t={$t}"); ?>"></script>
+    <script src="<?= path()->js("/notification.js?t={$t}"); ?>"></script>
     <?= $this->insert('templates/js', ['js' => $js ?? []]) ?>
     <?php
     enableNotifications();

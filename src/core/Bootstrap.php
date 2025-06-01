@@ -3,6 +3,7 @@
 namespace src\core;
 
 use Exception;
+use src\database\Database;
 use src\support\Uri;
 use src\support\View;
 

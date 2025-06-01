@@ -7,6 +7,9 @@ use PDO;
 use PDOException;
 use Ramsey\Uuid\Rfc4122\UuidV4;
 use src\database\Database;
+use src\exceptions\app\CreateFailException;
+use src\exceptions\app\GetFailException;
+use src\exceptions\app\ListingAllFailException;
 use src\exceptions\pdo\ColumnDoesntHaveADefaultValueException;
 use src\exceptions\pdo\ColumnNotFoundException;
 use src\exceptions\pdo\IntegerValueException;
@@ -16,49 +19,50 @@ use stdClass;
 class Querio
 {
 
-    public PDO $db;
-    protected string $table;
-    protected string $queryString;
+    public static PDO|null $db = null;
+    protected static string|null $queryString = null;
+    public static string $table = "";
     /** @var array<string, mixed> */
-    protected array $bind;
-    protected bool $selectIsOne;
-
+    protected static array|null $bind = null;
+    protected static bool|null $selectIsOne = null;
+    protected static string $calledClass = "";
 
     function __construct()
     {
-        $this->set_db(Database::setConfig());
+        self::$db = Database::instance();
     }
 
-    function set_db(Database $db)
+    public static function getTable()
     {
-        $this->queryString = '';
-        $this->db = $db->get();
-        return $this;
+        return static::$table;
     }
+
+
 
     /**
      * @param array $data
      * @return self
      */
-    function insert(array $data): self
+    static function insert(array $data): self
     {
-        $this->queryString = "INSERT INTO {$this->table}";
-        $this->values($data);
-        return $this;
+        $t = self::getTable();
+        self::$queryString = "INSERT INTO {$t}";
+        self::values($data);
+        return new self;
     }
 
     /**
      * @param array<string, mixed> $binds
      * @return self
      */
-    function values(array $binds = []): self
+    static function values(array $binds = []): self
     {
-        $this->bind = $binds;
+        self::$bind = $binds;
         $keys = implode(", ", array_keys($binds));
         $keysUsingInBind = ":" . implode(", :", array_keys($binds));
-        $this->queryString .= " ({$keys}) VALUES ({$keysUsingInBind})";
+        self::$queryString .= " ({$keys}) VALUES ({$keysUsingInBind})";
 
-        return $this;
+        return new self;
     }
 
 
@@ -68,15 +72,15 @@ class Querio
      * @param mixed $value
      * @return self
      */
-    function where(string $column, string $operation, mixed $value): self
+    static function where(string $column, string $operation, mixed $value): self
     {
         $columnWithoutTable = $column;
         if (str_contains($column, '.'))
             [$table, $columnWithoutTable] = explode(".", $column);
 
-        $this->queryString .= " WHERE {$column} {$operation} :{$columnWithoutTable}";
-        $this->bind[$columnWithoutTable] = $value;
-        return $this;
+        self::$queryString .= " WHERE {$column} {$operation} :{$columnWithoutTable}";
+        self::$bind[$columnWithoutTable] = $value;
+        return new self;
     }
 
 
@@ -86,15 +90,15 @@ class Querio
      * @param mixed $value
      * @return self
      */
-    function andWhere(string $column, string $operation, mixed $value): self
+    static function andWhere(string $column, string $operation, mixed $value): self
     {
         $columnWithoutTable = $column;
         if (str_contains($column, '.'))
             [$table, $columnWithoutTable] = explode(".", $column);
 
-        $this->queryString .= " AND {$column} {$operation} :{$columnWithoutTable}";
-        $this->bind[$columnWithoutTable] = $value;
-        return $this;
+        self::$queryString .= " AND {$column} {$operation} :{$columnWithoutTable}";
+        self::$bind[$columnWithoutTable] = $value;
+        return new self;
     }
 
     /**
@@ -103,15 +107,15 @@ class Querio
      * @param mixed $value
      * @return self
      */
-    function orWhere(string $column, string $operation, mixed $value): self
+    static function orWhere(string $column, string $operation, mixed $value): self
     {
         $columnWithoutTable = $column;
         if (str_contains($column, '.'))
             [$table, $columnWithoutTable] = explode(".", $column);
 
-        $this->queryString .= " OR {$column} {$operation} :{$column}";
-        $this->bind[$column] = $value;
-        return $this;
+        self::$queryString .= " OR {$column} {$operation} :{$column}";
+        self::$bind[$column] = $value;
+        return new self;
     }
 
 
@@ -120,7 +124,7 @@ class Querio
      * @param array<string, mixed> $values
      * @return self
      */
-    function andIn(string $column, array $values): self
+    static function andIn(string $column, array $values): self
     {
         $columnWithoutTable = $column;
         if (str_contains($column, '.'))
@@ -129,13 +133,13 @@ class Querio
         $params = [];
         foreach ($values as $key => $value) {
             $params[":{$column}{$key}"] = $value;
-            $this->bind[":{$column}{$key}"] = $value;
+            self::$bind[":{$column}{$key}"] = $value;
         }
         $paramsIn = implode(", ", array_keys($params));
 
-        $this->queryString .= " AND {$column} IN ({$paramsIn})";
+        self::$queryString .= " AND {$column} IN ({$paramsIn})";
 
-        return $this;
+        return new self;
     }
 
     /**
@@ -143,7 +147,7 @@ class Querio
      * @param array<string, mixed> $values
      * @return self
      */
-    function whereIn(string $column, array $values): self
+    static function whereIn(string $column, array $values): self
     {
         $columnWithoutTable = $column;
         if (str_contains($column, '.'))
@@ -152,69 +156,78 @@ class Querio
         $params = [];
         foreach ($values as $key => $value) {
             $params[":{$column}{$key}"] = $value;
-            $this->bind[":{$column}{$key}"] = $value;
+            self::$bind[":{$column}{$key}"] = $value;
         }
         $paramsIn = implode(", ", array_keys($params));
 
 
-        $this->queryString .= " WHERE {$column} IN ({$paramsIn})";
-        return $this;
+        self::$queryString .= " WHERE {$column} IN ({$paramsIn})";
+        return new self;
     }
 
     /**
      * @param string $column
      * @return self
      */
-    function whereIsNull(string $column): self
+    static function whereIsNull(string $column): self
     {
-        $this->queryString .= " WHERE {$column} IS NULL";
-        return $this;
+        self::$queryString .= " WHERE {$column} IS NULL";
+        return new self;
     }
 
     /**
      * @param string $column
      * @return self
      */
-    function whereIsNotNull(string $column): self
+    static function whereIsNotNull(string $column): self
     {
-        $this->queryString .= " WHERE {$column} IS NOT NULL";
-        return $this;
+        self::$queryString .= " WHERE {$column} IS NOT NULL";
+        return new self;
     }
 
     /**
-     * @return object|array<int, object>|bool
+     * @return stdClass|array<int, object>|bool|self
      */
-    function finish(): object|array|bool
+    static function finish(): stdClass|array|bool|self
     {
         try {
-            $firstWord = strstr($this->queryString, ' ', true);
+            $firstWord = strstr(self::$queryString, ' ', true);
             if (!is_string($firstWord)) {
                 return false;
             }
             $operation = strtolower(trim($firstWord));
             $isSelect = $operation === 'select';
 
+
             if (!$isSelect) {
-                $stmt = $this->db->prepare($this->queryString);
-                $r = $stmt->execute($this->bind ?? []);
+                $stmt = self::$db->prepare(self::$queryString);
+                $r = $stmt->execute(self::$bind ?? []);
+                
+
+                foreach (self::$bind as $k => $v) {
+                    if (strpos($k, "\x00") !== false) {
+                        unset(self::$bind[$k]);
+                    }
+                }
+
+                
+
                 if ($operation === 'insert')
-                    return array_merge(['id' => $this->db->lastInsertId()], $this->bind);
+                    return (object) array_merge(['id' => self::$db->lastInsertId()], self::$bind);
                 else if ($operation === 'update')
-                    return $this->bind;
+                    return (object) self::$bind;
                 return $r;
             } else {
-                if ($this->selectIsOne)
-                    $this->limit();
+                if (self::$selectIsOne)
+                    self::limit();
 
 
-                $stmt = $this->db->prepare($this->queryString);
-                $stmt->execute($this->bind ?? []);
+                $stmt = self::$db->prepare(self::$queryString);
+                $stmt->execute(self::$bind ?? []);
 
-
-
-                $stmt->setFetchMode(PDO::FETCH_OBJ);
-
-                if ($this->selectIsOne) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::$calledClass);
+                
+                if (self::$selectIsOne) {
                     $found = $stmt->fetch();
                     if (!$found)
                         return false;
@@ -229,13 +242,15 @@ class Querio
         } catch (PDOException $e) {
 
             if (str_contains($e->getMessage(), "doesn't have a default value")) {
-                throw new ColumnDoesntHaveADefaultValueException(['message from pdo' => $e->errorInfo[2]]);
+                new ColumnDoesntHaveADefaultValueException(['message from pdo' => $e->errorInfo[2]]);
             } else if (str_contains($e->getMessage(), 'Base table or view not found')) {
-                throw new TableOrViewNotFoundException(['message from pdo' => $e->errorInfo[2]]);
+                new TableOrViewNotFoundException(['message from pdo' => $e->errorInfo[2]]);
             } else if (str_contains($e->getMessage(), 'Column not found')) {
-                throw new ColumnNotFoundException(['message from pdo' => $e->errorInfo[2]]);
+                new ColumnNotFoundException(['message from pdo' => $e->errorInfo[2]]);
             } else if (str_contains($e->getMessage(), 'Incorrect integer value')) {
-                throw new IntegerValueException(['message from pdo' => $e->errorInfo[2]]);
+                new IntegerValueException(['message from pdo' => $e->errorInfo[2]]);
+            } else {
+                dd($e->getMessage(), self::$bind, self::$queryString);
             }
             return false;
         }
@@ -245,16 +260,18 @@ class Querio
      * @param array<int, string> $fields
      * @param bool $selectIsOne - false as default
      */
-    function select(array $fields = [], bool $selectIsOne = false): self
+    static function select(array $fields = [], bool $selectIsOne = false): self
     {
+        self::$bind = [];
+        $t = self::getTable();
         if (empty($fields))
-            $fieldsInString = "{$this->table}.*";
+            $fieldsInString = "{$t}.*";
         else
             $fieldsInString = implode(', ', $fields);
 
-        $this->selectIsOne = $selectIsOne;
-        $this->queryString = "SELECT {$fieldsInString} FROM {$this->table}";
-        return $this;
+        self::$selectIsOne = $selectIsOne;
+        self::$queryString = "SELECT {$fieldsInString} FROM {$t}";
+        return new self;
     }
 
 
@@ -262,18 +279,18 @@ class Querio
      * @param array<int, string> $fields
      * @return self
      */
-    function selectOne(array $fields = []): self
+    static function selectOne(array $fields = []): self
     {
-        return $this->select($fields, true);
+        return self::select($fields, true);
     }
 
     /**
      * @param int $limit - 1 as default
      */
-    function limit(int $limit = 1): self
+    static function limit(int $limit = 1): self
     {
-        $this->queryString .= " LIMIT {$limit}";
-        return $this;
+        self::$queryString .= " LIMIT {$limit}";
+        return new self;
     }
 
     /**
@@ -283,10 +300,10 @@ class Querio
      * @param string $secondColumn
      * @return self
      */
-    function innerJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
+    static function innerJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
     {
-        $this->queryString .= " INNER JOIN {$table} ON {$this->table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
-        return $this;
+        self::$queryString .= " INNER JOIN {$table} ON {self::$table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
+        return new self;
     }
 
     /**
@@ -296,10 +313,10 @@ class Querio
      * @param string $secondColumn
      * @return self
      */
-    function leftJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
+    static function leftJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
     {
-        $this->queryString .= " LEFT JOIN {$table} ON {$this->table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
-        return $this;
+        self::$queryString .= " LEFT JOIN {$table} ON {self::$table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
+        return new self;
     }
 
     /**
@@ -309,10 +326,10 @@ class Querio
      * @param string $secondColumn
      * @return self
      */
-    function rightJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
+    static function rightJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
     {
-        $this->queryString .= " RIGHT JOIN {$table} ON {$this->table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
-        return $this;
+        self::$queryString .= " RIGHT JOIN {$table} ON {self::$table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
+        return new self;
     }
 
     /**
@@ -322,10 +339,10 @@ class Querio
      * @param string $secondColumn
      * @return self
      */
-    function fullJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
+    static function fullJoin(string $table, string $firstColumn, string $operation, string $secondColumn): self
     {
-        $this->queryString .= " FULL OUTER JOIN {$table} ON {$this->table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
-        return $this;
+        self::$queryString .= " FULL OUTER JOIN {$table} ON {self::$table}.{$firstColumn} {$operation} {$table}.{$secondColumn}";
+        return new self;
     }
 
 
@@ -333,25 +350,27 @@ class Querio
      * @param string $table
      * @return self
      */
-    function table(string $table): self
+    static function table(string $table): self
     {
-        $this->table = $table;
-        return $this;
+        self::$calledClass = get_called_class();
+        self::$table = $table;
+        return new self;
     }
 
     /**
      * @param array<string, mixed> $data
      * @return self
      */
-    function update(array $data): self
+    static function update(array $data): self
     {
-        $this->queryString = "UPDATE {$this->table} SET ";
+        $t = self::getTable();
+        self::$queryString = "UPDATE {$t} SET ";
         foreach ($data as $key => $value) {
-            $this->queryString .= "{$key} = :{$key}, ";
+            self::$queryString .= "{$key} = :{$key}, ";
         }
-        $this->queryString = rtrim($this->queryString, ", ");
-        $this->bind = $data;
-        return $this;
+        self::$queryString = rtrim(self::$queryString, ", ");
+        self::$bind = $data;
+        return new self;
     }
 
 
@@ -359,76 +378,79 @@ class Querio
     /**
      * @return self
      */
-    function delete(): self
+    static function delete(): self
     {
-        $this->queryString = "DELETE FROM {$this->table}";
-        return $this;
+        $t = self::getTable();
+        self::$queryString = "DELETE FROM {$t}";
+        return new self;
     }
 
     /**
      * @return self
      */
-    function softDelete(): self
+    static function softDelete(): self
+
     {
-        $this->queryString = "UPDATE {$this->table} SET deleted_at = NOW()";
-        return $this;
+        $t = self::getTable();
+        self::$queryString = "UPDATE {$t} SET deleted_at = NOW()";
+        return new self;
     }
 
     /**
      * @return ?PDO
      */
-    function getPDO(): ?PDO
+    static function getPDO(): ?PDO
     {
-        return $this->db;
+        return self::$db;
     }
 
-    function transactionBegin(): self
+    static function transactionBegin(): self
     {
-        $this->db->beginTransaction();
-        return $this;
+        self::$db->beginTransaction();
+        return new self;
     }
 
-    function transactionCommit(): self
+    static function transactionCommit(): self
     {
-        $this->db->commit();
-        return $this;
+        self::$db->commit();
+        return new self;
     }
 
-    function transactionRollback(): self
+    static function transactionRollback(): self
     {
-        $this->db->rollback();
-        return $this;
+        self::$db->rollback();
+        return new self;
     }
 
 
     /**
      * @param int $offset
      */
-    function offset(int $offset): self
+    static function offset(int $offset): self
     {
-        $this->queryString .= " OFFSET {$offset}";
-        return $this;
+        self::$queryString .= " OFFSET {$offset}";
+        return new self;
     }
 
     /**
      * @param string $column
      * @param string $type
      */
-    function order(string $column, string $type): self
+    static function order(string $column, string $type): self
     {
-        $this->queryString .= " ORDER BY {$column} {$type}";
-        return $this;
+        self::$queryString .= " ORDER BY {$column} {$type}";
+        return new self;
     }
 
 
-    function getPagination(int $itemsInPage = 5): stdClass
+    static function getPagination(int $itemsInPage = 5): stdClass
     {
         $stdclass = new stdClass();
 
-        $raw = $this->finish();
+        $raw = self::finish();
         $pagina = (isset($_GET['page']) ? $_GET['page'] : 1) - 1;
         $offset = $pagina * $itemsInPage;
-        $paginated = $this->order("id", "DESC")->limit($itemsInPage)->offset($offset)->finish(0);
+        $paginated = self::order("id", "DESC")->limit($itemsInPage)->offset($offset)->finish(0);
         $quantitiesOfPages = ceil(count($raw ? $raw : []) / $itemsInPage);
         $links = pagination($quantitiesOfPages);
 
@@ -445,96 +467,172 @@ class Querio
     }
 
 
-    // Functions ready for uses
+    // static Functions ready for uses
 
     /**
      * @param array $data
-     * @return bool|array<string, mixed>
+     * @return bool|array<string, mixed>|object
      */
-    function create(array $data): bool|array
+    static function create(array $data): bool|array|object
     {
+        self::$calledClass = get_called_class();
         $data['uuid'] = UuidV4::uuid4()->toString();
-        return $this->table($this->table)->insert($data)->finish();
+        $created = self::table(self::getTable())->insert($data)->finish();
+
+        if (!$created)
+            new CreateFailException(["payload" => $data]);
+
+        return $created;
     }
 
 
 
-    function getById(int $id): stdClass|bool
+    static function getById(int $id): mixed
     {
-        return $this->getByColumn("id", $id);
+        self::$calledClass = get_called_class();
+        return self::getByColumn("id", $id);
     }
 
-    function getByUuid(string $uuid): stdClass|bool
+    /**
+     * @param string $uuid
+     * @return static|bool
+     */
+    static function getByUuid(string $uuid): static|bool
     {
-        return $this->getByColumn("uuid", $uuid);
+        self::$calledClass = get_called_class();
+        $i = self::getByColumn("uuid", $uuid);
+
+        if (!$i)
+            new GetFailException(["from" => self::$calledClass, "payload" => ["uuid" => $uuid], "method" => "getByUuid"]);
+
+        return $i;
     }
 
-    function getByColumn(string $column, string $value, string $operation = "="): stdClass|bool
+    static function getByColumn(string $column, string $value, string $operation = "="): mixed
     {
-        return $this->table($this->table)->selectOne()->where($column, $operation, $value)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->selectOne()->where($column, $operation, $value)->finish();
     }
 
     /**
      * @param int $id
      * @return bool
      */
-    function deleteById(int $id): bool
+    static function deleteById(int $id): bool
     {
-        return $this->table($this->table)->delete()->where('id', "=", $id)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->delete()->where('id', "=", $id)->finish();
     }
 
     /**
      * @param int $iuud
      * @return bool
      */
-    function deleteByUuid(string $uuid): bool
+    static function deleteByUuid(string $uuid): bool
     {
-        return $this->table($this->table)->delete()->where('uuid', "=", $uuid)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->delete()->where('uuid', "=", $uuid)->finish();
     }
 
 
-    function softDeleteById(int $id): bool
+    static function softDeleteById(int $id): bool|stdClass
     {
-        return $this->table($this->table)->softDelete()->where('id', "=", $id)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->softDelete()->where('id', "=", $id)->finish();
     }
 
-    function softDeleteByUuid(string $uuid): bool
+    static function softDeleteByUuid(string $uuid): bool|stdClass
     {
-        return $this->table($this->table)->softDelete()->where('uuid', "=", $uuid)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->softDelete()->where('uuid', "=", $uuid)->finish();
     }
 
 
-    function updateById(int $id, array $data)
+    static function updateById(int $id, array $data): mixed
     {
-        return $this->table($this->table)->update($data)->where("id", "=", $id)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->update($data)->where("id", "=", $id)->finish();
     }
 
-    function updateByUuid(string $uuid, array $data)
+    static function updateByUuid(string $uuid, array $data): mixed
     {
-        return $this->table($this->table)->update($data)->where("uuid", "=", $uuid)->finish();
+        self::$calledClass = get_called_class();
+        return self::table(self::getTable())->update($data)->where("uuid", "=", $uuid)->finish();
     }
 
     /**
      * Save the record
-     * @return bool|array<string, mixed>
+     * @return mixed
      */
-    function save(): bool|array
+    static function save(): mixed
     {
-        if (isset($this->bind['id'])) {
-            return $this->updateById($this->bind['id'], $this->bind);
-        } else if (isset($this->bind['uuid'])) {
-            return $this->updateByUuid($this->bind['uuid'], $this->bind);
+        self::$calledClass = get_called_class();
+        if (isset(self::$bind['id'])) {
+            return self::updateById(self::$bind['id'], self::$bind);
+        } else if (isset(self::$bind['uuid'])) {
+            return self::updateByUuid(self::$bind['uuid'], self::$bind);
         }
-        return $this->create($this->bind);
+        return self::create(self::$bind);
     }
 
     /**
      * Find all records
      * @param array<int, string> $fields
-     * @return array<int, object>
+     * @return bool|array<int, object>
      */
-    function getAll(array $fields = ['*']): array
+    static function getAll(array $fields = ['*']): array|bool
     {
-        return $this->table($this->table)->select($fields)->finish() ?: [];
+
+        self::$calledClass = get_called_class();
+        $all = self::table(self::getTable())->select($fields)->finish();
+
+        if (!$all)
+            new ListingAllFailException(["from" => self::$calledClass]);
+
+        return $all;
+    }
+
+
+
+    /**
+     * Find all records with deleted_at is null
+     * @param array<int, string> $fields
+     * @return bool|array<int, object>
+     */
+    static function getAllActivates(array $fields = ['*']): array|bool
+    {
+
+        self::$calledClass = get_called_class();
+        $all = self::table(self::getTable())->select($fields)->whereIsNull("deleted_at")->finish();
+
+        if (!$all)
+            new ListingAllFailException(["from" => self::$calledClass]);
+
+        return $all;
+    }
+
+
+
+    /**
+     * Find all records with deleted_at is not null
+     * @param array<int, string> $fields
+     * @return bool|array<int, object>
+     */
+    static function getAllDeactivates(array $fields = ['*']): array|bool
+    {
+
+        self::$calledClass = get_called_class();
+        $all = self::table(self::getTable())->select($fields)->whereIsNotNull("deleted_at")->finish();
+
+        if (!$all)
+            new ListingAllFailException(["from" => self::$calledClass]);
+
+        return $all;
+    }
+
+
+    static function onlyProperties()
+    {
+        dd(get_called_class());
     }
 }

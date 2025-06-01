@@ -26,10 +26,18 @@ class Redirect
         return $this;
     }
 
-    function route(string $name, array $indexes = [])
+    function link(string $link)
+    {
+        $this->returnClass = new RedirectLink($link);
+        $this->uri = $this->returnClass->uri;
+        return $this;
+    }
+
+    function route(string $name, array $indexes = [], array $queryString = [])
     {
         $this->returnClass = new RedirectRoute($name, $indexes);
-        $this->uri = $this->returnClass->uri;
+        $queryStringComplement = '?' . http_build_query($queryString);
+        $this->uri = $this->returnClass->uri . $queryStringComplement;
         return $this;
     }
 
@@ -99,7 +107,14 @@ class RedirectUri
     }
 }
 
-
+class RedirectLink
+{
+    public ?string $uri;
+    function __construct(string $uri)
+    {
+        $this->uri = $uri;
+    }
+}
 
 
 class RedirectBack

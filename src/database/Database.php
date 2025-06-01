@@ -36,24 +36,15 @@ class Database
 
     static function setConfig()
     {
-        if (!empty($_ENV['DB_FROM_FILE'])) {
-            $config = require $_ENV['DB_FROM_FILE'];
-            self::config(
-                type: $config['DB_TYPE'],
-                host: $config['DB_HOST'],
-                dbname: $config['DB_NAME'],
-                username: $config['DB_USER'],
-                password: $config['DB_PASSWORD']
-            );
-        } else {
-            self::config(
-                type: $_ENV['DB_TYPE'],
-                host: $_ENV['DB_HOST'],
-                dbname: $_ENV['DB_NAME'],
-                username: $_ENV['DB_USER'],
-                password: $_ENV['DB_PASSWORD']
-            );
-        }
+        
+        require __DIR__ . "/db.php";
+        self::config(
+            type: $type,
+            host: $host,
+            dbname: $dbName,
+            username: $username,
+            password: $password
+        );
         return new self;
     }
 
@@ -70,8 +61,6 @@ class Database
     {
         try {
             self::$pdo = new PDO(self::dns(), self::$username, self::$password);
-            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$pdo->setAttribute(PDO::ATTR_TIMEOUT, 10);
             return self::$pdo;
         } catch (PDOException $e) {
             dd("Erro ao conectar com o banco de dados: " . $e->getMessage());
@@ -87,7 +76,7 @@ class Database
     {
         switch (self::$typeConnection) {
             case 'mysql':
-                return "mysql:host=" . self::$host . ";dbname=" . self::$dbname . ";charset=utf8mb4";
+                return "mysql:host=" . self::$host . ";dbname=" . self::$dbname . ";";
             case 'sqlserver':
                 return "sqlsrv:Server=" . self::$host . ";Database=" . self::$dbname . "";
             case 'informix':

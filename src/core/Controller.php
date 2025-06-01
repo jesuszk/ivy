@@ -8,6 +8,7 @@ use ReflectionClass;
 use src\support\Json;
 use src\support\Redirect;
 use src\support\RedirectBack;
+use src\support\RedirectLink;
 use src\support\RedirectRoute;
 use src\support\RedirectUri;
 use src\support\RequestType;
@@ -49,6 +50,8 @@ class Controller
                 header("Location: {$_ENV['APP_URL']}{$response->uri}");
             } else if ($response->returnClass instanceof RedirectBack) {
                 header('Location: ' . $response->uri);
+            } else if ($response->returnClass instanceof RedirectLink) {
+                header("Location: {$response->uri}");
             }
         }
     }

@@ -24,7 +24,7 @@ abstract class Request
     public function get(?string $key = null): array|string
     {
         if (!$key)
-            return httpRequest::excepts(["token"]);
+            return httpRequest::excepts(["token", "to"]);
         return $this->input($key);
     }
 
