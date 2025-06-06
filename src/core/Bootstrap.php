@@ -20,7 +20,7 @@ class Bootstrap
             (new Controller(explode(":", implode('@', $r['action']))[0]));
         } catch (Exception $e) {
             $message = $e->getMessage();
-            $r = View::render('templates.error', ['mssg' => $message, 'code' => $e->getCode()]);
+            $r = View::render('error', ['mssg' => $message, 'code' => $e->getCode()]);
             echo $r::$isString;
         }
     }
