@@ -4,7 +4,7 @@
 
 
 
-<form action="https://httpbin.org/post" method="POST" class="form login">
+<form action="<?= route("auth.register.store"); ?>" method="POST" class="form login">
 
     <h4 class="text-center login__title">
         <span>WOZK</span>
@@ -24,9 +24,14 @@
     </div>
 
     <div class="form__field">
-        <input type="submit" value="Sign In">
+        <label for="login__password__confirm"><i class="ph ph-lock"></i><span class="hidden">Password</span></label>
+        <input id="login__password__confirm" type="password" name="password_confirmation" class="form__input" placeholder="Password Confirmation" required>
+    </div>
+
+    <div class="form__field">
+        <input type="submit" value="Create Account">
     </div>
 
 </form>
 
-<p class="text--center">Not a member? <a href="<?= route("auth.register"); ?>">Sign up now <i class="ph ph-arrow-right"></i></a></p>
+<p class="text--center">Have account? <a href="<?= route("auth.login"); ?>">login now <i class="ph ph-arrow-right"></i></a></p>
