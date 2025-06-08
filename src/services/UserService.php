@@ -11,6 +11,11 @@ use src\support\Sessions;
 class UserService
 {
 
+    /**
+     * cria um novo usuário
+     * @param array $data - username e password
+     * @return User
+     */
     function create(array $data): User
     {
         $user = User::create($data);
@@ -21,14 +26,27 @@ class UserService
         return $user;
     }
 
-    function update(array $data)
+    /**
+     * Exibe uma mensagem de boas vindas ao usuário no primeiro acesso
+     * @return void
+     */
+    function greetings(): void
     {
-        $user = User::updateByUuid(user()->uuid, $data);
-        $this->createSessionAuthentication($user);
+        if (user()->show_message === 'N') {
+            notification()->info("Seja bem-vindo(a), <b>" . user()->username . "</b> 👋🏼");
+            notification()->info("Este é um sistema pessoal, não somos uma empresa e não devem ser fornecidos dados sensíveis.");
+            $user = User::updateByUuid(user()->uuid, ["show_message" => 'Y']);
+            $this->createSessionAuthentication($user);
+        }
     }
 
 
-    function login(array $data)
+    /**
+     * Realiza o login do usuário
+     * @param array $data - username e password
+     * @return array - Sessão contendo os dados do usuário
+     */
+    function login(array $data): array
     {
         $user = User::table("users")->selectOne(["*"])->where("username", "=", $data["username"])->finish();
 
@@ -41,7 +59,12 @@ class UserService
         return $this->createSessionAuthentication($user);
     }
 
-    function createSessionAuthentication(User $user)
+    /**
+     * Cria a sessão de autenticação do usuário
+     * @param User $user
+     * @return array - Sessão contendo os dados do usuário
+     */
+    function createSessionAuthentication(User $user): array
     {
         return Sessions::set("authentication", [
             "uuid" => $user->uuid,

@@ -5,7 +5,9 @@ namespace src\controllers;
 use Exception;
 use src\requests\AuthLoginRequest;
 use src\services\UserService;
+use src\support\Redirect;
 use src\support\Sessions;
+use src\support\View;
 
 class LoginController
 {
@@ -14,12 +16,21 @@ class LoginController
         private UserService $userService
     ) {}
 
-    function form()
+    /**
+     * Exibe o formulário de login
+     * @return View
+     */
+    function form(): View
     {
         return view("auth.login", []);
     }
 
-    function login(AuthLoginRequest $req)
+    /**
+     * Recebe a requisição para realizar o login
+     * @param AuthLoginRequest $req - Request com os dados do formulário
+     * @return Redirect
+     */
+    function login(AuthLoginRequest $req): Redirect
     {
         try {
             $this->userService->login($req->get());
@@ -29,7 +40,11 @@ class LoginController
         }
     }
 
-    function logout()
+    /**
+     * Realiza o logout da aplicação excluindo a sessão e redirecionando para a tela de login
+     * @return Redirect
+     */
+    function logout(): Redirect
     {
         Sessions::unset("authentication");
         return redirect()->route("auth.login")->withSuccess("Logout realizado com sucesso. Te espero novamente em breve 🙂");
