@@ -4,7 +4,7 @@
 
 
 
-<form action="https://httpbin.org/post" method="POST" class="form login">
+<form action="<?= route("auth.login.store"); ?>" method="POST" class="form login">
 
     <h4 class="text-center login__title">
         <span>WOZK</span>

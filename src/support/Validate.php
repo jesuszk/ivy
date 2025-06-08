@@ -63,6 +63,7 @@ class Validate
                 $this->multipleValidations($validations, $field, $param);
             }
         }
+        
 
         return $this->returnValidation();
     }

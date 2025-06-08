@@ -1,3 +1,4 @@
+<?php $t = time(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,13 @@
         type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <style>
+        :root {
+            --info: #3366FF;
+            --success: #84DC5B;
+            --error: #FF4F30;
+            --warning: #FFDA66;
+        }
+
         body {
             overflow-x: hidden;
         }
@@ -133,7 +141,7 @@
             margin-top: 1rem;
         }
 
-        #logoContainer .logo{
+        #logoContainer .logo {
             width: 80px;
         }
 
@@ -152,9 +160,11 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="<?= path()->css("notification.css?t=" . $t); ?>">
 </head>
 
 <body>
+    <ul class="notificationsToasts"></ul>
     <div class="sidebar" id="sidebar">
         <div id="logoContainer">
             <img src="<?= path()->images("zk-dark.png"); ?>" alt="Logo" class="logo">
@@ -172,6 +182,7 @@
 
         <a href="#"><i class="ph ph-clock"></i> Ideias</a>
         <a href="#"><i class="ph ph-gear"></i> Configs</a>
+        <a href="<?= route("auth.logout"); ?>"><i class="ph ph-sign-out"></i> Logout</a>
     </div>
 
     <div class="header" id="header">
@@ -179,10 +190,10 @@
             <button class="btn me-3" onclick="toggleSidebar()"><i class="ph ph-list"></i></button>
         </div>
         <div class="dropdown ms-auto">
-            <img src="https://ui-avatars.com/api/?size=30" alt="User" class="rounded-circle dropdown-toggle" data-bs-toggle="dropdown" style="cursor:pointer">
+            <img src="https://ui-avatars.com/api/?name=<?= user()->username ?>&size=40" alt="User" class="rounded-circle dropdown-toggle" data-bs-toggle="dropdown" style="cursor:pointer">
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li><a class="dropdown-item" href="<?= route("auth.logout") ?>">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -212,6 +223,13 @@
             button.classList.toggle('active');
         }
     </script>
+
+    <script src="<?= path()->js("notification.js?t=" . $t); ?>"></script>
+
+    <?php
+    enableNotifications();
+    forgetSessions(['old', 'zarkify', 'isWrong']);
+    ?>
 </body>
 
 </html>

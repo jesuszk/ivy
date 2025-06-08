@@ -1,6 +1,6 @@
 .notificationsToasts {
   position: fixed;
-  top: 30px;
+  top: 80px;
   right: 20px;
   z-index: 9999;
 
@@ -67,23 +67,6 @@
     transform: translateX(calc(100% + 20px));
   }
 }
-
-/* .zarkify-toast::before {
-  position: absolute;
-  content: "";
-  height: 3px;
-  width: 100%;
-  bottom: 0px;
-  left: 0px;
-  animation: progress 300s linear forwards;
-}
-
-@keyframes progress {
-  100% {
-    width: 0%;
-  }
-} */
-
 
 
 .zarkify-toast.success,

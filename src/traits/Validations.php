@@ -17,7 +17,7 @@ trait Validations
     public function email(string $field): ?string
     {
         $input = Request::input($field);
-        if(is_string($input)){
+        if (is_string($input)) {
             $message = '';
             if (!filter_input(INPUT_POST, $field, FILTER_VALIDATE_EMAIL)) {
                 if ($_ENV["APP_LANGUAGE"] === 'en-us') $message = "The email provided is not valid";
@@ -25,8 +25,8 @@ trait Validations
                 IsWrong::set($field, $message);
                 return null;
             }
-    
-            return strip_tags($input, '<p>'); 
+
+            return strip_tags($input, '<p>');
         }
         return null;
     }
@@ -37,7 +37,7 @@ trait Validations
      * @param int $length
      * @return mixed
      */
-    public function maxLen(string $field, int $length): mixed
+    public function max(string $field, int $length): mixed
     {
         $message = '';
         $data = Request::input($field);
@@ -45,6 +45,29 @@ trait Validations
             if (strlen($data) > $length) {
                 if ($_ENV["APP_LANGUAGE"] === 'en-us') $message = "Field limit is {$length} characters";
                 else if ($_ENV["APP_LANGUAGE"] === 'pt-br') $message = "O limite do campo é de {$length} caracteres";
+                IsWrong::set($field, $message);
+                return null;
+            }
+            return strip_tags($data, '<p>');
+        }
+        return null;
+    }
+
+
+    /**
+     * Check if the field contains the amount of characters in its maximum limit
+     * @param string $field
+     * @param int $length
+     * @return mixed
+     */
+    public function min(string $field, int $length): mixed
+    {
+        $message = '';
+        $data = Request::input($field);
+        if (is_string($data)) {
+            if (strlen($data) < $length) {
+                if ($_ENV["APP_LANGUAGE"] === 'en-us') $message = "Field limit minimum is {$length} characters";
+                else if ($_ENV["APP_LANGUAGE"] === 'pt-br') $message = "O limite mínimo do campo é de {$length} caracteres";
                 IsWrong::set($field, $message);
                 return null;
             }

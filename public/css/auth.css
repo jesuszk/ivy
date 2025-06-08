@@ -16,6 +16,11 @@
         --inputColor: #161616;
         --text-color: rgb(12, 10, 14);
         --lineColor: #78A083;
+
+        --info: #3366FF;
+        --success: #84DC5B;
+        --error: #FF4F30;
+        --warning: #FFDA66;
     }
 
     body.dark {
@@ -233,7 +238,7 @@
     /** Handle Theme */
     #handleTheme {
         position: absolute;
-        right: 20px;
+        left: 20px;
         top: 20px;
     }
 

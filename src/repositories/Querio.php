@@ -202,7 +202,7 @@ class Querio
             if (!$isSelect) {
                 $stmt = self::$db->prepare(self::$queryString);
                 $r = $stmt->execute(self::$bind ?? []);
-                
+
 
                 foreach (self::$bind as $k => $v) {
                     if (strpos($k, "\x00") !== false) {
@@ -210,12 +210,18 @@ class Querio
                     }
                 }
 
-                
 
-                if ($operation === 'insert')
-                    return (object) array_merge(['id' => self::$db->lastInsertId()], self::$bind);
-                else if ($operation === 'update')
-                    return (object) self::$bind;
+
+                if ($operation === 'insert') {
+                    $called = self::$calledClass;
+                    return $called::getById(self::$db->lastInsertId());
+                } else if ($operation === 'update') {
+                    $called = self::$calledClass;
+                    if (isset(self::$bind["id"]))
+                        return $called::getById(self::$bind["id"]);
+                    else
+                        return $called::getByUuid(self::$bind["uuid"]);
+                }
                 return $r;
             } else {
                 if (self::$selectIsOne)
@@ -226,7 +232,7 @@ class Querio
                 $stmt->execute(self::$bind ?? []);
 
                 $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::$calledClass);
-                
+
                 if (self::$selectIsOne) {
                     $found = $stmt->fetch();
                     if (!$found)
@@ -240,7 +246,6 @@ class Querio
                 }
             }
         } catch (PDOException $e) {
-
             if (str_contains($e->getMessage(), "doesn't have a default value")) {
                 new ColumnDoesntHaveADefaultValueException(['message from pdo' => $e->errorInfo[2]]);
             } else if (str_contains($e->getMessage(), 'Base table or view not found')) {
@@ -628,11 +633,5 @@ class Querio
             new ListingAllFailException(["from" => self::$calledClass]);
 
         return $all;
-    }
-
-
-    static function onlyProperties()
-    {
-        dd(get_called_class());
     }
 }
