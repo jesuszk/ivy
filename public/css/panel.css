@@ -1,0 +1,139 @@
+:root {
+  --info: #3366ff;
+  --success: #84dc5b;
+  --error: #ff4f30;
+  --warning: #ffda66;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.sidebar {
+  width: 170px;
+  height: 100vh;
+  background-color: #252525;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 10px;
+  transition: transform 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar a,
+.sidebar button {
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 18px;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar button:hover {
+  background-color: #046377;
+}
+
+.dropdown-container a {
+  padding: 10px 15px;
+}
+
+.dropdown-container {
+  max-height: 0;
+  overflow: hidden;
+  flex-direction: column;
+  padding-left: 30px;
+  transition: max-height 0.3s ease;
+}
+
+.sidebar .active + .dropdown-container {
+  max-height: 200px;
+}
+
+.header {
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-left: 170px;
+  transition: margin-left 0.3s ease;
+  position: relative;
+  z-index: 1060;
+}
+
+.header.shifted {
+  margin-left: 0;
+}
+
+.content {
+  margin-left: 170px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.content.shifted {
+  margin-left: 0;
+}
+
+.toggle-btn {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+#logoContainer .logo {
+  width: 80px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .header,
+  .content {
+    margin-left: 0;
+  }
+}
