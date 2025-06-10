@@ -39,50 +39,99 @@
         grid-column-start: 5;
         grid-row-start: 6;
     }
+</style>
 
-    .div1 {
-        background: red;
+
+
+
+<style>
+    .cp-styled {
+        border: 1px solid #ccc;
+        background-color: #fff;
     }
 
-    .div2 {
-        background: orange;
+    .habit-champion {
+        background: #fff;
+        color: black;
+        border-radius: 12px;
+        padding: 1rem;
+        transition: transform 0.4s ease;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    .div3 {
-        background: yellow;
+    .habit-champion .hc-icon {
+        margin-right: 10px;
+        background: #F3FBCD;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .div4 {
-        background: green;
+    .habit-champion .hc-habit-count {
+        margin-left: 1rem;
     }
 
-    .div5 {
-        background: blue;
-    }
-
-    .div6 {
-        background: indigo;
-    }
-
-    .div7 {
-        background: violet;
-    }
-
-    .div8 {
-        background: pink;
-    }
-
-    .div9 {
-        background: lightgray;
+    .habit-champion .hc-habit-count .hc-habit {
+        font-weight: bold;
+        color: rgb(163, 163, 163);
     }
 </style>
 
+
 <div class="parent">
-    <div class="div1">Melhor Hábito (que possui mais conclusões)</div>
-    <div class="div2">Dias Perfeitos (Dias que todos os hábitos foram concluídos)</div>
-    <div class="div3">Concluídos Hoje</div>
-    <div class="div4">Concluídos Ontem</div>
-    <div class="div5">Satisfação %</div>
+    <div class="cp-styled habit-champion">
+        <div class="hc-icon">🏆</div>
+        <div class="hc-habit-count">
+            <div class="hc-habit">Leitura</div>
+            <div class="hc-count"><b>245</b> dias seguidos</div>
+        </div>
+    </div>
+
+    <div class="cp-styled habit-champion">
+        <div class="hc-icon">👻</div>
+        <div class="hc-habit-count">
+            <div class="hc-habit">Passear com Olga</div>
+            <div class="hc-count"><b>12</b> dias atrás</div>
+        </div>
+    </div>
+
+    <div class="cp-styled habit-champion">
+        <div class="hc-icon">🎉</div>
+        <div class="hc-habit-count">
+            <div class="hc-habit">Concluídos Hoje</div>
+            <div class="hc-count"><b>24</b> Hábitos</div>
+        </div>
+    </div>
+
+
+    <div class="cp-styled habit-champion">
+        <div class="hc-icon">🤨</div>
+        <div class="hc-habit-count">
+            <div class="hc-habit">Pendentes Hoje</div>
+            <div class="hc-count"><b>13</b> hábitos</div>
+        </div>
+    </div>
+
+    <div class="cp-styled habit-champion">
+        <div class="hc-icon">🎉</div>
+        <div class="hc-habit-count">
+            <div class="hc-habit">Ativos</div>
+            <div class="hc-count"><b>20</b> hábitos ativos</div>
+        </div>
+    </div>
+
+
+
+
+
+
+
     <div class="div6">6</div>
     <div class="div7">7</div>
     <div class="div8">8</div>

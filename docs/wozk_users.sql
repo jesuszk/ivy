@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `wozk` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `wozk`;
+
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: wozk
@@ -18,13 +17,13 @@ USE `wozk`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `wozk_users`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `wozk_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `wozk_users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `uuid` char(36) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -38,13 +37,13 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `wozk_users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (42,'2d6bdb5d-9df2-410c-ba8f-3f480464cbd9','2025-06-08 02:26:59','2025-06-08 02:28:54',NULL,'gabi','$2y$10$CSNSelkoeqC8huq1K/RxV.Zbf8aAtAG2G5Do6hm07AXo24qrxrZIS','Y'),(43,'c3d554cb-085b-4ae5-bc38-5491447f75f3','2025-06-08 02:34:38','2025-06-08 02:34:38',NULL,'wozk','$2y$10$aQqM4PG0C60psUUiEaNxIOAEaeiXi.ZToe2UEScJPFZlf4xqI1oue','Y');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `wozk_users` WRITE;
+/*!40000 ALTER TABLE `wozk_users` DISABLE KEYS */;
+INSERT INTO `wozk_users` VALUES (42,'2d6bdb5d-9df2-410c-ba8f-3f480464cbd9','2025-06-08 02:26:59','2025-06-08 02:28:54',NULL,'gabi','$2y$10$CSNSelkoeqC8huq1K/RxV.Zbf8aAtAG2G5Do6hm07AXo24qrxrZIS','Y'),(43,'c3d554cb-085b-4ae5-bc38-5491447f75f3','2025-06-08 02:34:38','2025-06-08 02:34:38',NULL,'wozk','$2y$10$aQqM4PG0C60psUUiEaNxIOAEaeiXi.ZToe2UEScJPFZlf4xqI1oue','Y');
+/*!40000 ALTER TABLE `wozk_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

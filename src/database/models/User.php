@@ -6,7 +6,7 @@ use src\repositories\Querio;
 
 class User extends Querio
 {
-    public static string $table = "users";
+    public static string $table = "wozk_users";
 
 
     public string $uuid;

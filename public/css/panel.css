@@ -1,12 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 :root {
   --info: #3366ff;
   --success: #84dc5b;
   --error: #ff4f30;
   --warning: #ffda66;
+
+  --light: #fff;
+
+  --font-family: "Nunito", sans-serif;
+  --font-light: 300;
+  --font-regular: 300;
+  --font-medium: 300;
+  --font-bold: 300;
 }
+
 
 body {
   overflow-x: hidden;
+  font-family: var(--font-family);
 }
 
 .sidebar {
@@ -99,6 +111,7 @@ body {
   margin-left: 170px;
   padding: 20px;
   transition: margin-left 0.3s ease;
+  background: #ededee;
 }
 
 .content.shifted {

@@ -48,7 +48,7 @@ class UserService
      */
     function login(array $data): array
     {
-        $user = User::table("users")->selectOne(["*"])->where("username", "=", $data["username"])->finish();
+        $user = User::table("wozk_users")->selectOne(["*"])->where("username", "=", $data["username"])->finish();
 
         if (!$user)
             throw new NotFoundException("Usuário não encontrado em nossa base");

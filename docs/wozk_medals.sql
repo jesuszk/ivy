@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `wozk` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `wozk`;
+
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: wozk
@@ -18,13 +17,13 @@ USE `wozk`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `medals`
+-- Table structure for table `wozk_medals`
 --
 
-DROP TABLE IF EXISTS `medals`;
+DROP TABLE IF EXISTS `wozk_medals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medals` (
+CREATE TABLE `wozk_medals` (
   `id` int NOT NULL AUTO_INCREMENT,
   `uuid` char(36) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -38,13 +37,13 @@ CREATE TABLE `medals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `medals`
+-- Dumping data for table `wozk_medals`
 --
 
-LOCK TABLES `medals` WRITE;
-/*!40000 ALTER TABLE `medals` DISABLE KEYS */;
-INSERT INTO `medals` VALUES (1,'9223e8f7-17c5-45e3-878d-e72a5ebd0fcc','Consistência 5 dias','Complete 5 dias consecutivos de um hábito','consistencia','2025-06-08 19:19:33','2025-06-08 19:19:33',NULL),(2,'2546c905-50a2-47f3-be85-29e94c65c9b2','Meta semanal batida','Atingiu 100% da meta semanal','progresso','2025-06-08 19:19:33','2025-06-08 19:19:33',NULL);
-/*!40000 ALTER TABLE `medals` ENABLE KEYS */;
+LOCK TABLES `wozk_medals` WRITE;
+/*!40000 ALTER TABLE `wozk_medals` DISABLE KEYS */;
+INSERT INTO `wozk_medals` VALUES (1,'9223e8f7-17c5-45e3-878d-e72a5ebd0fcc','Consistência 5 dias','Complete 5 dias consecutivos de um hábito','consistencia','2025-06-08 19:19:33','2025-06-08 19:19:33',NULL),(2,'2546c905-50a2-47f3-be85-29e94c65c9b2','Meta semanal batida','Atingiu 100% da meta semanal','progresso','2025-06-08 19:19:33','2025-06-08 19:19:33',NULL);
+/*!40000 ALTER TABLE `wozk_medals` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
