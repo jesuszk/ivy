@@ -3,6 +3,7 @@
 namespace src\controllers;
 
 use Exception;
+use src\database\models\User;
 use src\requests\AuthLoginRequest;
 use src\services\UserService;
 use src\support\Redirect;
