@@ -13,6 +13,10 @@
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" href="<?= path()->css("panel.css?t=" . $t); ?>">
     <link rel="stylesheet" href="<?= path()->css("notification.css?t=" . $t); ?>">
+
+    <?php foreach ($styles as $i => $style) { ?>
+        <link rel="stylesheet" href="<?= $style ?>">
+    <?php } ?>
 </head>
 
 <body>
@@ -76,6 +80,12 @@
     </script>
 
     <script src="<?= path()->js("notification.js?t=" . $t); ?>"></script>
+
+    <?php if (isset($js)) { ?>
+        <?php foreach ($js as $i => $j) { ?>
+            <script src="<?= $j . "?t=" . $t ?>"></script>
+        <?php } ?>
+    <?php } ?>
 
     <?php
     enableNotifications();
