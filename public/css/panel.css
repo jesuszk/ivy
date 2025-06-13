@@ -115,6 +115,7 @@ body {
   padding: 20px;
   transition: margin-left 0.3s ease;
   background: #ededee;
+  min-height: calc(100vh - 60px);
 }
 
 .content.shifted {
@@ -132,7 +133,7 @@ body {
   align-items: center;
   width: 100%;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-top: 5rem;
 }
 
 #logoContainer .logo {
@@ -152,4 +153,9 @@ body {
   .content {
     margin-left: 0;
   }
+}
+
+.btn-styled {
+  background: #d9f9ab;
+  border: #d9f9ab;
 }

@@ -12,10 +12,15 @@
 
 
 
+<div class="row">
+    <div class="col-12">
+        <a href="#" class="btn btn-styled w-100 fw-bold text-muted">Novo Hábito <i class="ph ph-plus"></i></a>
+    </div>
+</div>
 
+<?= $this->insert("panel/cards"); ?>
 
-<div class="container-grid">
-    <?= $this->insert("panel/cards"); ?>
+<div class="group-pending-graphs">
     <?= $this->insert("panel/pending"); ?>
     <?= $this->insert("panel/graphs"); ?>
 </div>
