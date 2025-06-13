@@ -7,12 +7,46 @@
   min-height: calc(100vh - 100px);
 }
 
-.actives {
+.cp-styled {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.flex-adj {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*  =================================== Grids ====================================== */
+.grid-1 {
   grid-column: span 1 / span 1;
   grid-row: span 1 / span 1;
 }
 
-.list-habits {
+.grid-2 {
+  grid-column: span 1 / span 1;
+  grid-row: span 1 / span 1;
+}
+
+.grid-3 {
+  grid-column: span 1 / span 1;
+  grid-row: span 1 / span 1;
+}
+
+.grid-4 {
+  grid-column: span 1 / span 1;
+  grid-row: span 1 / span 1;
+}
+
+.grid-5 {
+  grid-column: span 1 / span 1;
+  grid-row: span 1 / span 1;
+}
+
+.grid-6 {
   grid-column: span 1 / span 1;
   grid-row: span 9 / span 9;
   padding-top: 1.2rem;
@@ -21,9 +55,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: start;
+  padding-inline: 10px;
 }
 
-.gp-evolution {
+.grid-7 {
   grid-column: span 4 / span 4;
   grid-row: span 4 / span 4;
   grid-column-start: 2;
@@ -31,7 +66,7 @@
   height: 100%;
 }
 
-.gp-status-in-day {
+.grid-8 {
   grid-column: span 2 / span 2;
   grid-row: span 5 / span 5;
   grid-column-start: 2;
@@ -43,27 +78,15 @@
   justify-content: center;
 }
 
-.gp-more-doned {
+.grid-9 {
   grid-row: span 6 / span 5;
   grid-column: span 2 / span 2;
   grid-column-start: 4;
   grid-row-start: 6;
 }
 
-.flex-adj {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.cp-styled {
-  border: 1px solid #ccc;
-  background-color: #fff;
-  border-radius: 12px;
-}
-
-.hct-habit {
+/* ====================================== Card Habit Top ================================= */
+.habit-card-top {
   background: #fff;
   color: black;
   padding: 1rem;
@@ -74,51 +97,35 @@
   align-items: center;
 }
 
-.hct-habit .hc-icon {
+.habit-card-top .hc-icon {
+  min-width: 55px;
   margin-right: 10px;
   background: #f3fbcd;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.hct-habit .hc-habit-count {
+.habit-card-top .hc-habit-count {
   margin-left: 1rem;
 }
 
-.hct-habit .hc-habit-count .hc-habit {
+.habit-card-top .hc-habit-count .hc-habit {
   font-weight: bold;
   color: rgb(163, 163, 163);
 }
 
-.forgot .hc-icon {
-  background: #ebebeb;
-}
-
-.doned .hc-icon {
-  background: #bbd8a3;
-}
-
-.pending .hc-icon {
-  background: #ffde88;
-}
-
-.actives .hc-icon {
-  background: #adc8ff;
-}
-
-.lh-card {
-  width: 80%;
-  /* height: 160px; */
+/* ========================== Grid6 - Lista de hábitos pendentes hoje ==================== */
+.list-habits-card {
   background: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1);
-  margin: 20px;
   padding: 0 10px;
   border: 1px solid rgb(223, 223, 223);
+  margin-bottom: 1rem;
 }
 
 .card-wrapper {
@@ -132,7 +139,7 @@
   width: 20%;
 }
 
-.card-icon .icon-cart-box {
+.card-icon .icon-ph {
   background-color: #e0f2f1;
   width: 3em;
   height: 3em;
@@ -167,39 +174,23 @@
   padding: 0 30px;
 }
 
-.card-action svg {
-  cursor: pointer;
-  fill: rgba(0, 0, 0, 0.2);
-  transition: 0.3s ease-in-out;
-}
-
-.card-action svg:hover {
-  fill: rgba(0, 0, 0, 0.6);
-}
-
-.product-name {
+.habit-rsm {
   font-size: 0.8em;
   color: #757575;
   padding: 5px 0 0 10px;
 }
 
-.product-name:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.product-price {
+.habit-time {
   font-size: 0.9em;
   font-weight: 600;
   color: #333;
   padding: 0 0 10px 10px;
 }
 
-.btn-view-cart {
-  font-size: 0.7em;
+.btn-done {
+  font-size: 0.6rem;
   font-weight: 600;
   padding: 8px 10px 5px 10px;
-  /* margin: 5px 10px 20px; */
   margin-left: 10px;
   border-radius: 8px;
   color: #009688;
@@ -215,19 +206,18 @@
   justify-content: center;
 }
 
-.btn-view-cart:hover,
-.btn-view-cart:active,
-.btn-view-cart:focus {
+.btn-done:hover,
+.btn-done:active,
+.btn-done:focus {
   color: white;
   background-color: #009688;
   border: 1px solid #009688;
 }
 
-.btn-forgot {
-  font-size: 0.7em;
+.btn-skip {
+  font-size: 0.6rem;
   font-weight: 600;
   padding: 8px 10px 5px 10px;
-  /* margin: 5px 10px 20px; */
   margin-left: 10px;
   border-radius: 8px;
   color: rgb(150, 0, 0);
@@ -243,30 +233,10 @@
   justify-content: center;
 }
 
-.btn-forgot:hover,
-.btn-forgot:active,
-.btn-forgot:focus {
+.btn-skip:hover,
+.btn-skip:active,
+.btn-skip:focus {
   color: white;
   background-color: rgb(150, 0, 0);
   border: 1px solidrgb(150, 0, 0);
-}
-
-.champion {
-  grid-column: span 1 / span 1;
-  grid-row: span 1 / span 1;
-}
-
-.forgot {
-  grid-column: span 1 / span 1;
-  grid-row: span 1 / span 1;
-}
-
-.doned {
-  grid-column: span 1 / span 1;
-  grid-row: span 1 / span 1;
-}
-
-.pending {
-  grid-column: span 1 / span 1;
-  grid-row: span 1 / span 1;
 }

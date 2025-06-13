@@ -1,4 +1,4 @@
-<div class="cp-styled hct-habit champion">
+<div class="cp-styled habit-card-top grid-1">
     <div class="hc-icon">🏆</div>
     <div class="hc-habit-count">
         <div class="hc-habit">Leitura</div>
@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="cp-styled hct-habit forgot">
+<div class="cp-styled habit-card-top grid-2">
     <div class="hc-icon">👻</div>
     <div class="hc-habit-count">
         <div class="hc-habit">Passear com Olga</div>
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="cp-styled hct-habit doned">
+<div class="cp-styled habit-card-top grid-3">
     <div class="hc-icon">🎉</div>
     <div class="hc-habit-count">
         <div class="hc-habit">Concluídos Hoje</div>
@@ -23,7 +23,7 @@
 </div>
 
 
-<div class="cp-styled hct-habit pending">
+<div class="cp-styled habit-card-top grid-4">
     <div class="hc-icon">🤨</div>
     <div class="hc-habit-count">
         <div class="hc-habit">Pendentes Hoje</div>
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<div class="cp-styled hct-habit actives">
+<div class="cp-styled habit-card-top grid-5">
     <div class="hc-icon">🎉</div>
     <div class="hc-habit-count">
         <div class="hc-habit">Ativos</div>
