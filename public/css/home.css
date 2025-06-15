@@ -55,12 +55,12 @@
   max-height: 900px;
 }
 .list-habits-card {
-  background: #f9f9f9;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  padding: 0.5rem;
   border: 1px solid rgb(223, 223, 223);
   margin-bottom: 1rem;
+  box-shadow: 23px 21px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .card-wrapper {
@@ -208,6 +208,17 @@
   /* Firefox */
 }
 
+.btn-add-habit {
+  background: #d9f9ab;
+  border: #d9f9ab;
+  width: 100%;
+}
+
+.btn-add-habit:hover {
+  background: #d4f9a1;
+  border: #d4f9a1;
+}
+
 /* min = acima de  */
 @media (min-width: 1000px) {
   .habit-card-top {
@@ -242,5 +253,9 @@
 
   #daily-consistents .cp-styled {
     width: 50%;
+  }
+
+  .btn-add-habit {
+    width: auto;
   }
 }

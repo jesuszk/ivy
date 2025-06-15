@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-12">
-        <a href="#" class="btn btn-styled w-100 fw-bold text-muted">Novo Hábito <i class="ph ph-plus"></i></a>
+        <a href="#" class="btn btn-add-habit fw-bold text-muted">Novo Hábito <i class="ph ph-plus"></i></a>
     </div>
 </div>
 
