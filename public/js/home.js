@@ -22,7 +22,7 @@ chart.render();
 var options = {
   labels: ["Concluídos", "Pendentes"],
   series: [20, 5],
-  legend: { show: !0, offsetX: 70 },
+  legend: { show: !0 },
   colors: ["#D7F469", "#FFA78A"],
   chart: { type: "donut", height: "100%", toolbar: { show: !1 } },
   responsive: [

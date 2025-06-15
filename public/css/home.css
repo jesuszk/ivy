@@ -225,10 +225,22 @@
   .group-pending-graphs {
     display: flex;
     flex-wrap: wrap;
-    /* gap: 1rem; */
   }
 
-  .gp-evolution {
+  #graphs {
     width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #daily-consistents {
+    display: flex;
+    height: -webkit-fill-available;
+    gap: 10px;
+  }
+
+  #daily-consistents .cp-styled {
+    width: 50%;
   }
 }

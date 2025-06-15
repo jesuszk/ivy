@@ -1,4 +1,4 @@
- <div class="cp-styled habits-pending">
+ <div class="cp-styled habits-pending mb-3">
      <h5 class="mt-3 text-muted fw-bold">Pendentes (Hoje)</h5>
      <i class="ph ph-minus mb-3" style="color: green;"></i>
      <div class="list-habits-card">
