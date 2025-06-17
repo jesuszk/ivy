@@ -54,17 +54,19 @@
   overflow-y: scroll;
   max-height: 900px;
 }
+
 .list-habits-card {
-  background: #ffffff;
+  background: #ceebc826;
   border-radius: 12px;
-  padding: 0.5rem;
   border: 1px solid rgb(223, 223, 223);
-  margin-bottom: 1rem;
-  box-shadow: 23px 21px 15px -3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 90%;
 }
 
 .card-wrapper {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
   width: 100%;
@@ -72,10 +74,12 @@
 
 .card-icon {
   width: 20%;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .card-icon .icon-ph {
-  background-color: #e0f2f1;
+  background-color: #dcf3e0;
   width: 3em;
   height: 3em;
   border-radius: 50%;
@@ -97,22 +101,25 @@
 
 .card-title {
   width: 95%;
-  font-size: 1em;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #333;
   padding: 8px 0 0 10px;
+  text-align: center;
 }
 
 .card-action {
   width: 5%;
   text-align: right;
   padding: 0 30px;
+  text-align: center;
 }
 
 .habit-rsm {
   font-size: 0.8em;
   color: #757575;
   padding: 5px 0 0 10px;
+  text-align: center;
 }
 
 .habit-time {
@@ -120,6 +127,7 @@
   font-weight: 600;
   color: #333;
   padding: 0 0 10px 10px;
+  text-align: center;
 }
 
 .btn-done {

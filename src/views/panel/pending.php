@@ -11,11 +11,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Beber 2 Litros de água</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -33,11 +33,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -55,11 +55,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -78,11 +78,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -100,11 +100,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -122,11 +122,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -144,11 +144,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -166,11 +166,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -188,11 +188,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -210,11 +210,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
@@ -232,11 +232,11 @@
 
              <div class="card-content">
                  <div class="card-title-wrapper">
-                     <span class="card-title mt-3">Háb. Corrida</span>
+                     <span class="card-title">Háb. Corrida</span>
                  </div>
                  <div class="habit-rsm">Realizar uma corrida básica de 1km</div>
                  <div class="habit-time">Em <b>45 minutos </b></div>
-                 <div class="d-flex">
+                 <div class="d-flex align-items-center justify-content-center">
                      <button class="btn-done mb-4" type="button">Concluir <i class="ms-1 ph ph-checks"></i></button>
                      <button class="btn-skip mb-4" type="button">Pular <i class="ms-1 ph ph-x"></i></button>
                  </div>
