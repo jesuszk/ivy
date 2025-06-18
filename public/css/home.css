@@ -227,6 +227,42 @@
   border: #d4f9a1;
 }
 
+.days-btn-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+}
+
+.day-btn {
+  display: none; /* Hide the original checkbox */
+}
+
+.day-label {
+  background-color: transparent;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9bbd94;
+  cursor: pointer;
+  border: 2px solid #9bbd94;
+  border-radius: 20%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+}
+
+/* Apply styles for the selected state */
+.day-btn:checked + .day-label {
+  background-color: #008cff;
+  background-image: linear-gradient(147deg, #c1dbbc 0%, #9bbd94 74%);
+  border: none;
+  color: white;
+}
+
 /* min = acima de  */
 @media (min-width: 1000px) {
   .habit-card-top {

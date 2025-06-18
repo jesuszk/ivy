@@ -17,6 +17,12 @@
     <?php foreach ($styles as $i => $style) { ?>
         <link rel="stylesheet" href="<?= $style ?>">
     <?php } ?>
+
+    <?php if (isset($js_started)) { ?>
+        <?php foreach ($js_started as $i => $j) { ?>
+            <script src="<?= $j . "?t=" . $t ?>"></script>
+        <?php } ?>
+    <?php } ?>
 </head>
 
 <body>

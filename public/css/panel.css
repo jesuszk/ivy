@@ -2,9 +2,14 @@
 
 :root {
   --info: #3366ff;
-  --success: #84dc5b;
+  --success: #ddfba6;
   --error: #ff4f30;
   --warning: #ffda66;
+
+  --btn-info: #3366ff;
+  --btn-success: #9bbd94;
+  --btn-error: #ff4f30;
+  --btn-warning: #ffda66;
 
   --light: #fff;
 
@@ -13,6 +18,10 @@
   --font-regular: 500;
   --font-medium: 700;
   --font-bold: 800;
+}
+
+.modal {
+  margin-top: 5rem !important;
 }
 
 .fw-bold {
@@ -140,6 +149,100 @@ body {
   width: 80px;
 }
 
+.btn-primary {
+  background-color: var(--btn-info);
+  border-color: var(--btn-info);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-info);
+  border-color: var(--btn-info);
+}
+
+.btn-success {
+  background-color: var(--btn-success);
+  border-color: var(--btn-success);
+}
+
+.btn-success:hover {
+  background-color: var(--btn-success);
+  border-color: var(--btn-success);
+}
+
+.btn-danger {
+  background-color: var(--btn-error);
+  border-color: var(--btn-error);
+}
+
+.btn-danger:hover {
+  background-color: var(--btn-error);
+  border-color: var(--btn-error);
+}
+
+.btn-warning {
+  background-color: var(--btn-warning);
+  border-color: var(--btn-warning);
+}
+
+.btn-warning:hover {
+  background-color: var(--btn-warning);
+  border-color: var(--btn-warning);
+}
+
+/* Modals */
+.modal-header {
+  background: #9bbd94;
+  color: #fff;
+}
+
+/* inputs */
+/* From Uiverse.io by ozgeozkaraa01 */
+.input-group-styled {
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  position: relative;
+  max-width: 200px;
+}
+
+.input-styled {
+  width: 100%;
+  height: 45px;
+  line-height: 30px;
+  padding: 0 5rem;
+  padding-left: 3rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  background-color: #f8fafc;
+  color: #0d0c22;
+  transition: 0.5s ease;
+}
+
+.input-styled::placeholder {
+  color: #94a3b8;
+}
+
+.input-styled:focus,
+.input-styled:hover {
+  outline: none;
+  border-color: rgba(129, 140, 248);
+  background-color: #fff;
+  box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+}
+
+.input-icon-styled {
+  position: absolute;
+  left: 1rem;
+  fill: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+label span {
+  color: red;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -154,5 +257,3 @@ body {
     margin-left: 0;
   }
 }
-
-
